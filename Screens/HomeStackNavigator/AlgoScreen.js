@@ -13,6 +13,7 @@ import {
   ScrollView,
   useToast,
   Text,
+  CheckIcon,
 } from "native-base";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Header } from "../../components/Header";
@@ -135,6 +136,11 @@ export default function AlgoScreen({ navigation, route }) {
               }}
               placeholder="Choose Theme"
               mt={height * 0.01}
+              _selectedItem={{
+                bg: "red.900",
+                borderRadius: 10,
+                endIcon: <CheckIcon size="5" />,
+              }}
               onValueChange={async (itemValue) => {
                 setTheme(map1.get(itemValue));
                 const key = "theme";
