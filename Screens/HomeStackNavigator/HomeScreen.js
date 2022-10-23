@@ -191,11 +191,8 @@ export default function HomeScreen({ navigation }) {
               : navigation.navigate("UserAlgos");
           }}
         >
-          <Shadow Shadow startColor="#bab8b8" distance={12} offset={[12, 12]}>
+          <Shadow Shadow startColor="#2c2c2c" distance={12} offset={[12, 12]}>
             <Text
-              _light={{
-                bg: "#8E50AF",
-              }}
               style={styles.box}
               _dark={{
                 color: "#fff",

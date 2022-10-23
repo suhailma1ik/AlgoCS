@@ -35,24 +35,32 @@ export function Header({ Topic }) {
               icon={<Icon size="lg" as={MaterialIcons} name="arrow-back" />}
             />
           )}
-          <Text fontSize="20" fontWeight="bold" fontFamily="GbBold">
+          <Text
+            fontSize="20"
+            fontWeight="bold"
+            color="#c2c8d4"
+            style={{ fontFamily: "GbBold" }}
+          >
             {Topic}
           </Text>
         </HStack>
         {Topic === "Home" ? (
-          <Box bgColor="#4649FF">
-            <TouchableOpacity
-              onPress={() => {
-                signOut();
+          <HStack alignItems="center" flex={1} justifyContent="flex-end">
+            <Box bgColor="transparent">
+              <TouchableOpacity
+                marginLeft="2"
+                onPress={() => {
+                  signOut();
 
-                toast.show({
-                  description: "Signed out successfully",
-                });
-              }}
-            >
-              <Text>Logout</Text>
-            </TouchableOpacity>
-          </Box>
+                  toast.show({
+                    description: "Signed out successfully",
+                  });
+                }}
+              >
+                <Text fontWeight="bold">Log Out</Text>
+              </TouchableOpacity>
+            </Box>
+          </HStack>
         ) : null}
         {/* <ToggleDarkMode /> */}
       </HStack>

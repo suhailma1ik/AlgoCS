@@ -30,6 +30,7 @@ import {
 } from "react-syntax-highlighter/styles/hljs";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Clipboard from "expo-clipboard";
+import { useFonts } from "expo-font";
 const { width, height } = Dimensions.get("window");
 const map1 = new Map();
 map1.set("dracula", dracula);
@@ -66,6 +67,10 @@ export default function AlgoScreen({ navigation, route }) {
     const value = JSON.parse(jsonValue);
     return value !== null ? value : dracula;
   };
+  const [fontsLoaded] = useFonts({
+    GbMed: require("../../assets/Fonts/Gilroy-Medium.ttf"),
+    GbBold: require("../../assets/Fonts/Gilroy-Bold.ttf"),
+  });
   useEffect(async () => {
     const key = "theme";
     const value = await getStoredTheme(key);
@@ -106,7 +111,6 @@ export default function AlgoScreen({ navigation, route }) {
         navigation={navigation}
         Topic={route.params.algoName}
       />
-      <Text>Long press on the code to copy it .</Text>
       <ScrollView>
         <SafeAreaView>
           {/* code below this */}
@@ -145,6 +149,15 @@ export default function AlgoScreen({ navigation, route }) {
               })}
             </Select>
           </Box>
+          <Text
+            fontFamily="GbMed"
+            marginLeft={1}
+            color="#c2c8d4"
+            marginBottom={4}
+            textAlign="center"
+          >
+            Long press on the code to copy it .
+          </Text>
           {Platform.OS !== "web" ? (
             <TouchableOpacity
               onLongPress={() => {
