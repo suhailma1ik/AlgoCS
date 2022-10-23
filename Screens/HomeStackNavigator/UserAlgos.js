@@ -1,7 +1,6 @@
 import {
   Dimensions,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
   ActivityIndicator,
@@ -17,6 +16,7 @@ import {
   ScrollView,
   Select,
   useToast,
+  Text,
 } from "native-base";
 import { collection, doc, getDocs, setDoc } from "firebase/firestore";
 import { db } from "../../Firebase";
@@ -157,11 +157,36 @@ export default function UserAlgos({ navigation }) {
             />{" "} */}
 
             <Select
+              customDropdownIconProps={{ color: "black", marginRight: 5 }}
+              style={{ color: "black" }}
+              _light={{
+                // bg: "#3E886E",
+                // borderRadius: 10,
+                // placeholderTextColor: "#E8E8E8",
+                // borderColor: "#3E886E",
+                // margin: 1,
+                // fontFamily: "GbBold",
+                bg: "#969696",
+                borderRadius: 10,
+                fontFamily: "GbBold",
+                placeholderTextColor: "#515151",
+                margin: 1,
+              }}
+              _dark={{
+                bg: "#969696",
+                borderRadius: 10,
+                fontFamily: "GbBold",
+                placeholderTextColor: "#515151",
+                margin: 1,
+                marginBottom: 2,
+              }}
+              selectedValueColor="red"
               selectedValue={language}
               accessibilityLabel="Select Language"
-              placeholder="Choose Service"
+              placeholder="Select Language"
               _selectedItem={{
-                bg: "teal.600",
+                bg: "red.900",
+                borderRadius: 10,
                 endIcon: <CheckIcon size="5" />,
               }}
               mt={1}
@@ -179,11 +204,11 @@ export default function UserAlgos({ navigation }) {
                 fontFamily: "GbMed",
                 marginLeft: 3,
                 marginRight: 3,
-                margbiutBottom: 2,
+                marginBottom: 3.5,
               }}
               value={newAlgorithmName}
               onChangeText={(text) => setNewAlgorithmName(text)}
-              placeholder="Add Name of Language"
+              placeholder="Add Name of Algorithm"
               placeholderTextColor="#4d4d4d"
             />
             <Input
@@ -194,7 +219,7 @@ export default function UserAlgos({ navigation }) {
                 fontFamily: "GbMed",
                 marginLeft: 3,
                 marginRight: 3,
-                marginBottom: 2,
+                marginBottom: 3.5,
               }}
               value={newAlgorithm}
               onChangeText={(text) => setNewAlgorithm(text)}
@@ -219,9 +244,7 @@ export default function UserAlgos({ navigation }) {
                 }
               }}
             >
-              <Text _dark={{ bg: "#b53333" }} style={styles.text}>
-                Add Algorithm
-              </Text>
+              <Text style={styles.text}>Add Algorithm</Text>
             </TouchableOpacity>
           </Shadow>
         </Box>
@@ -246,15 +269,7 @@ export default function UserAlgos({ navigation }) {
                 distance={12}
                 offset={[12, 12]}
               >
-                <Text
-                  style={styles.box}
-                  _dark={{
-                    color: "#fff",
-                    borderRadius: 10,
-                    bg: "#26458c",
-                  }}
-                  fontSize="4xl"
-                >
+                <Text style={styles.box} fontSize="4xl">
                   {item.AlgoName}
                 </Text>
               </Shadow>
@@ -280,12 +295,16 @@ const styles = StyleSheet.create({
     color: "#f9d3b4",
     fontFamily: "GbBold",
     paddingTop: 7.5,
+    color: "#fff",
+    borderRadius: 10,
+    backgroundColor: "#26458c",
   },
   text: {
     color: "#f9d3b4",
     fontFamily: "GbBold",
     borderRadius: 10,
     padding: 10,
+    backgroundColor: "#b53333",
   },
   text1: {
     color: "#f9d3b4",

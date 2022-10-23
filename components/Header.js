@@ -8,26 +8,30 @@ import {
   Box,
   useToast,
 } from "native-base";
+import { Dimensions } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useFonts } from "expo-font";
+import { Shadow } from "react-native-shadow-2";
 import { TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 export function Header({ Topic }) {
+  const { width, height } = Dimensions.get("window");
   const navigation = useNavigation();
   const toast = useToast();
-  const [fontsLoaded] = useFonts({
-    GbMed: require("../assets/Fonts/Gilroy-Medium.ttf"),
-    GbBold: require("../assets/Fonts/Gilroy-Bold.ttf"),
-  });
+
   const signOut = async () => {
     await AsyncStorage.removeItem("user");
     await AsyncStorage.removeItem("userRole");
   };
+  const [fontsLoaded] = useFonts({
+    GbMed: require("../assets/Fonts/Gilroy-Medium.ttf"),
+    GbBold: require("../assets/Fonts/Gilroy-Bold.ttf"),
+  });
   return (
     <Box>
       <StatusBar bg="#3700B3" barStyle="light-content" />
-      <HStack py="3" px="1" alignItems="center" w="100%" maxW="350">
+      <HStack py="3" px="1" alignItems="center" w="100%" maxW={width * 0.95}>
         <HStack alignItems="center">
           {Topic === "Home" ? null : (
             <IconButton
@@ -45,10 +49,14 @@ export function Header({ Topic }) {
           </Text>
         </HStack>
         {Topic === "Home" ? (
-          <HStack alignItems="center" flex={1} justifyContent="flex-end">
+          <HStack
+            alignItems="center"
+            flex={1}
+            justifyContent="flex-end"
+            marginLeft={0}
+          >
             <Box bgColor="transparent">
               <TouchableOpacity
-                marginLeft="2"
                 onPress={() => {
                   signOut();
 
@@ -57,7 +65,29 @@ export function Header({ Topic }) {
                   });
                 }}
               >
-                <Text fontWeight="bold">Log Out</Text>
+                <Shadow
+                  Shadow
+                  startColor="#2c2c2c"
+                  distance={10}
+                  offset={[1, 1]}
+                >
+                  <Text
+                    fontWeight="bold"
+                    style={{
+                      color: "#f9d3b4",
+                      fontFamily: "GbBold",
+                      fontWeight: "bold",
+                      borderColor: "transparent",
+                      borderWidth: 1,
+                      borderRadius: 10,
+                      padding: 10,
+                      backgroundColor: "#1a1a1a",
+                    }}
+                    fontSize="xs"
+                  >
+                    Log Out
+                  </Text>
+                </Shadow>
               </TouchableOpacity>
             </Box>
           </HStack>
