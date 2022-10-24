@@ -155,15 +155,17 @@ export default function AlgoScreen({ navigation, route }) {
               })}
             </Select>
           </Box>
-          <Text
-            fontFamily="GbMed"
-            marginLeft={1}
-            color="#c2c8d4"
-            marginBottom={4}
-            textAlign="center"
-          >
-            Long press on the code to copy it .
-          </Text>
+          {Platform.OS !== "web" ? (
+            <Text
+              fontFamily="GbMed"
+              marginLeft={1}
+              color="#c2c8d4"
+              marginBottom={4}
+              textAlign="center"
+            >
+              Long press on the code to copy it .
+            </Text>
+          ) : null}
           {Platform.OS !== "web" ? (
             <TouchableOpacity
               onLongPress={() => {

@@ -19,9 +19,9 @@ import { Header } from "../../components/Header";
 import { db } from "../../Firebase";
 import uuid from "react-uuid";
 import { collection, doc, getDocs, setDoc } from "firebase/firestore";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Shadow } from "react-native-shadow-2";
 import Search from "../../components/Search";
+import useStore from "../../components/Store/Store";
 const { width, height } = Dimensions.get("window");
 
 export default function TopicScreen({ navigation, route }) {
@@ -32,17 +32,15 @@ export default function TopicScreen({ navigation, route }) {
   const [newAlgorithmName, setNewAlgorithmName] = useState("");
   const [algocnt, setAlgoCnt] = useState(0);
   const [isLoaded, setIsLoaded] = useState(true);
-  const [user, setUser] = useState("admin");
   const { colorMode, toggleColorMode } = useColorMode();
   const toast = useToast();
 
-  useEffect(async () => {
-    const value = await AsyncStorage.getItem("user");
-    if (value !== null) {
-      console.log(user);
-      setUser(value);
-    }
+  const { user, userRole } = useStore((state) => ({
+    user: state.user,
+    userRole: state.userRole,
+  }));
 
+  useEffect(async () => {
     const colRef = collection(db, "Topics", id, topic);
     getDocs(colRef).then((querySnapshot) => {
       let data = [];

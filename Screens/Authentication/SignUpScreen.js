@@ -2,23 +2,21 @@ import { StyleSheet, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import {
   Box,
-  Button,
   Center,
   FormControl,
   Heading,
   HStack,
   Input,
   Text,
-  Link,
   VStack,
 } from "native-base";
 import { Header } from "../../components/Header";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { db } from "../../Firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { Shadow } from "react-native-shadow-2";
 import { useFonts } from "expo-font";
+import useStore from "../../components/Store/Store";
 export default function SignUpScreen({ navigation }) {
   const [fontsLoaded] = useFonts({
     GbMed: require("../../assets/Fonts/Gilroy-Medium.ttf"),
@@ -28,14 +26,15 @@ export default function SignUpScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  const setUserRoleZus = useStore((state) => state.setUserRole);
+  const setUser = useStore((state) => state.setUser);
+
   const setUserAndRole = async (id, user) => {
     const userRef = doc(db, "CustomFields", id);
     await setDoc(userRef, { role: "user" });
-    // const userRefPersonalAgos = doc(db, "PersonalAlgos", id);
-    // await setDoc(userRefPersonalAgos, { role: "user" });
-    const struser = JSON.stringify(user);
-    await AsyncStorage.setItem("user", JSON.stringify(user));
-    await AsyncStorage.setItem("userRole", "user");
+    setUser(user);
+    setUserRoleZus("user");
   };
   const SignUp = () => {
     const auth = getAuth();

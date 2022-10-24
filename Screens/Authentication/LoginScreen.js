@@ -2,23 +2,22 @@ import { StyleSheet, TouchableOpacity, Dimensions } from "react-native";
 import React, { useState } from "react";
 import {
   Box,
-  Button,
   Center,
   FormControl,
   Heading,
   HStack,
   Input,
   Text,
-  Link,
   VStack,
 } from "native-base";
 import { Header } from "../../components/Header";
-import { collection, doc, getDoc, getDocs, setDoc } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { db } from "../../Firebase";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Shadow } from "react-native-shadow-2";
 import { useFonts } from "expo-font";
+import useStore from "../../components/Store/Store";
+
 const { width, height } = Dimensions.get("window");
 export default function LoginScreen({ navigation }) {
   const [fontsLoaded] = useFonts({
@@ -28,12 +27,14 @@ export default function LoginScreen({ navigation }) {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const setUserRoleZus = useStore((state) => state.setUserRole);
+  const setUser = useStore((state) => state.setUser);
 
   const setUserRole = async (id, user) => {
     const userRef = doc(db, "CustomFields", id);
-    await AsyncStorage.setItem("user", JSON.stringify(user));
+    setUser(user);
     const userRole = await getDoc(userRef);
-    await AsyncStorage.setItem("userRole", userRole.data().role);
+    setUserRoleZus(userRole.data().role);
   };
 
   const Signin = () => {

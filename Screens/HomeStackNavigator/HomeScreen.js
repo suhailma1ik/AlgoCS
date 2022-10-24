@@ -19,12 +19,11 @@ import { collection, doc, getDocs, setDoc } from "firebase/firestore";
 import uuid from "react-uuid";
 import { db } from "../../Firebase";
 import { Header } from "../../components/Header";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFonts } from "expo-font";
 import { Shadow } from "react-native-shadow-2";
 import Search from "../../components/Search";
+import useStore from "../../components/Store/Store";
 const { width, height } = Dimensions.get("window");
-const userRole = "admin";
 export default function HomeScreen({ navigation }) {
   const [fontsLoaded] = useFonts({
     GbMed: require("../../assets/Fonts/Gilroy-Medium.ttf"),
@@ -37,12 +36,15 @@ export default function HomeScreen({ navigation }) {
   const [newTopic, setNewTopic] = useState("");
   const [isLoaded, setIsLoaded] = useState(true);
   const { colorMode, toggleColorMode } = useColorMode();
+  // const [userRole, setUserRole] = useState("user");
+  const { user, userRole } = useStore((state) => ({
+    user: state.user,
+    userRole: state.userRole,
+  }));
   const toast = useToast();
 
   const drk = "#2c2c2c#3e886e";
   useEffect(async () => {
-    await AsyncStorage.setItem("userRole", userRole);
-
     const colRef = collection(db, "Topics");
     getDocs(colRef).then((querySnapshot) => {
       let data = [];
@@ -57,6 +59,15 @@ export default function HomeScreen({ navigation }) {
       toggleColorMode();
     }
   }, [count]);
+
+  // useEffect(() => {
+  //   async function getRole() {
+  //     const role = await AsyncStorage.getItem("userRole");
+  //     setUserRole(role);
+  //   }
+
+  //   getRole();
+  // }, []);
 
   const addNewTopic = () => {
     const id = uuid();
@@ -185,7 +196,6 @@ export default function HomeScreen({ navigation }) {
         <Search searchFunction={searchTopic} />
         <TouchableOpacity
           onPress={async () => {
-            const user = await AsyncStorage.getItem("user");
             user === null
               ? navigation.navigate("AuthStack")
               : navigation.navigate("UserAlgos");

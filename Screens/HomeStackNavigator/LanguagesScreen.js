@@ -62,21 +62,10 @@ export default function LanguagesScreen({ navigation, route }) {
   };
 
   useEffect(async () => {
-    const value = await AsyncStorage.getItem("user");
-    if (value !== null) {
-      // setUser(value);
-    }
     const key = topic + algoName;
-    // const Langs = await getStoredLanguages(key);
-    // if (Langs !== null) {
-    //   setLanguages(Langs);
-    //   setIsLoaded(false);
-    // } else {
     getLanguageFromFirebase(key);
     setIsLoaded(false);
-    // }
   }, []);
-  // useEffect(() => {}, [languagecnt]);
   const addNewLanguage = () => {
     const langId = uuid();
     const Algoref = doc(db, "Topics", id, topic, algoId, algoName, langId);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   HStack,
   IconButton,
@@ -14,15 +14,23 @@ import { useNavigation } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { Shadow } from "react-native-shadow-2";
 import { TouchableOpacity } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import useStore from "./Store/Store";
+const { width, height } = Dimensions.get("window");
+
 export function Header({ Topic }) {
-  const { width, height } = Dimensions.get("window");
   const navigation = useNavigation();
   const toast = useToast();
+  const { user, userRole } = useStore((state) => ({
+    user: state.user,
+    userRole: state.userRole,
+  }));
+  const removeUserRole = useStore((state) => state.removeUserRole);
+  const removeUser = useStore((state) => state.removeUser);
 
   const signOut = async () => {
-    await AsyncStorage.removeItem("user");
-    await AsyncStorage.removeItem("userRole");
+    removeUser();
+    removeUserRole();
+    navigation.navigate("HomeStack");
   };
   const [fontsLoaded] = useFonts({
     GbMed: require("../assets/Fonts/Gilroy-Medium.ttf"),
@@ -56,39 +64,70 @@ export function Header({ Topic }) {
             marginLeft={0}
           >
             <Box bgColor="transparent">
-              <TouchableOpacity
-                onPress={() => {
-                  signOut();
-
-                  toast.show({
-                    description: "Signed out successfully",
-                  });
-                }}
-              >
-                <Shadow
-                  Shadow
-                  startColor="#2c2c2c"
-                  distance={10}
-                  offset={[1, 1]}
+              {userRole === null ? (
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate("AuthStack");
+                  }}
                 >
-                  <Text
-                    fontWeight="bold"
-                    style={{
-                      color: "#f9d3b4",
-                      fontFamily: "GbBold",
-                      fontWeight: "bold",
-                      borderColor: "transparent",
-                      borderWidth: 1,
-                      borderRadius: 10,
-                      padding: 10,
-                      backgroundColor: "#1a1a1a",
-                    }}
-                    fontSize="xs"
+                  <Shadow
+                    Shadow
+                    startColor="#2c2c2c"
+                    distance={10}
+                    offset={[1, 1]}
                   >
-                    Log Out
-                  </Text>
-                </Shadow>
-              </TouchableOpacity>
+                    <Text
+                      fontWeight="bold"
+                      style={{
+                        color: "#f9d3b4",
+                        fontFamily: "GbBold",
+                        fontWeight: "bold",
+                        borderColor: "transparent",
+                        borderWidth: 1,
+                        borderRadius: 10,
+                        padding: 10,
+                        backgroundColor: "#1a1a1a",
+                      }}
+                      fontSize="xs"
+                    >
+                      Log In
+                    </Text>
+                  </Shadow>
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  onPress={() => {
+                    signOut();
+                    toast.show({
+                      description: "Signed out successfully",
+                    });
+                  }}
+                >
+                  <Shadow
+                    Shadow
+                    startColor="#2c2c2c"
+                    distance={10}
+                    offset={[1, 1]}
+                  >
+                    <Text
+                      fontWeight="bold"
+                      style={{
+                        color: "#f9d3b4",
+                        fontFamily: "GbBold",
+                        fontWeight: "bold",
+                        borderColor: "transparent",
+                        borderWidth: 1,
+                        borderRadius: 10,
+                        padding: 10,
+                        backgroundColor: "#1a1a1a",
+                      }}
+                      fontSize="xs"
+                    >
+                      Log Out
+                    </Text>
+                  </Shadow>
+                </TouchableOpacity>
+              )}
             </Box>
           </HStack>
         ) : null}
