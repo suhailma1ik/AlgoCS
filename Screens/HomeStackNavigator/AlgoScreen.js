@@ -13,6 +13,7 @@ import {
   ScrollView,
   useToast,
   Text,
+  CheckIcon,
 } from "native-base";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Header } from "../../components/Header";
@@ -28,8 +29,9 @@ import {
   solarizedDark,
   solarizedLight,
 } from "react-syntax-highlighter/styles/hljs";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Clipboard from "expo-clipboard";
+import { useFonts } from "expo-font";
+import useStore from "../../components/Store/Store";
 const { width, height } = Dimensions.get("window");
 const map1 = new Map();
 map1.set("dracula", dracula);
@@ -61,20 +63,24 @@ export default function AlgoScreen({ navigation, route }) {
   const [theme, setTheme] = useState(dracula);
   const { colorMode, toggleColorMode } = useColorMode();
   const toast = useToast();
-  const getStoredTheme = async (key) => {
-    const jsonValue = await AsyncStorage.getItem(key);
-    const value = JSON.parse(jsonValue);
+  const setLocalTheme = useStore((state) => state.setLocalTheme);
+  const { LocalTheme } = useStore((state) => ({
+    LocalTheme: state.LocalTheme,
+  }));
+  const getStoredTheme = () => {
+    const value = LocalTheme;
     return value !== null ? value : dracula;
   };
+  const [fontsLoaded] = useFonts({
+    GbMed: require("../../assets/Fonts/Gilroy-Medium.ttf"),
+    GbBold: require("../../assets/Fonts/Gilroy-Bold.ttf"),
+  });
   useEffect(async () => {
     const key = "theme";
-    const value = await getStoredTheme(key);
-    if (value !== null) {
-      setTheme(value);
-    } else {
-      await AsyncStorage.setItem(key, JSON.stringify(dracula));
-      setTheme(dracula);
-    }
+    const value = getStoredTheme();
+    setLocalTheme(value);
+    setTheme(value);
+    console.log(value);
     const algonr = route.params.algo;
     setAlgo(algonr);
     setIsLoaded(false);
@@ -101,14 +107,13 @@ export default function AlgoScreen({ navigation, route }) {
       style={{ overflow: Platform.OS === "android" ? "hidden" : "scroll" }}
       flex={1}
     >
-      <Header
-        fontFamily="GbBold"
-        navigation={navigation}
-        Topic={route.params.algoName}
-      />
-      <Text>Long press on the code to copy it .</Text>
-      <ScrollView>
-        <SafeAreaView>
+      <SafeAreaView>
+        <Header
+          fontFamily="GbBold"
+          navigation={navigation}
+          Topic={route.params.algoName}
+        />
+        <ScrollView>
           {/* code below this */}
           <Box mb={height * 0.02}>
             <Select
@@ -131,13 +136,15 @@ export default function AlgoScreen({ navigation, route }) {
               }}
               placeholder="Choose Theme"
               mt={height * 0.01}
+              _selectedItem={{
+                bg: "red.900",
+                borderRadius: 10,
+                endIcon: <CheckIcon size="5" />,
+              }}
               onValueChange={async (itemValue) => {
                 setTheme(map1.get(itemValue));
                 const key = "theme";
-                await AsyncStorage.setItem(
-                  key,
-                  JSON.stringify(map1.get(itemValue))
-                );
+                setLocalTheme(map1.get(itemValue));
               }}
             >
               {styleList.map((item, index) => {
@@ -145,6 +152,17 @@ export default function AlgoScreen({ navigation, route }) {
               })}
             </Select>
           </Box>
+          {Platform.OS !== "web" ? (
+            <Text
+              fontFamily="GbMed"
+              marginLeft={1}
+              color="#c2c8d4"
+              marginBottom={4}
+              textAlign="center"
+            >
+              Long press on the code to copy it .
+            </Text>
+          ) : null}
           {Platform.OS !== "web" ? (
             <TouchableOpacity
               onLongPress={() => {
@@ -175,8 +193,8 @@ export default function AlgoScreen({ navigation, route }) {
               {algo}
             </SyntaxHighlighter>
           )}
-        </SafeAreaView>
-      </ScrollView>
+        </ScrollView>
+      </SafeAreaView>
     </Box>
   );
 }

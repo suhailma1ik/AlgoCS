@@ -1,22 +1,20 @@
 import {
   Dimensions,
   StyleSheet,
-  Text,
   TouchableOpacity,
-  View,
   ActivityIndicator,
+  Platform,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   Box,
   CheckIcon,
   FlatList,
   Input,
-  ScrollView,
   Select,
   useToast,
+  Text,
 } from "native-base";
 import { collection, doc, getDocs, setDoc } from "firebase/firestore";
 import { db } from "../../Firebase";
@@ -24,8 +22,10 @@ import { Shadow } from "react-native-shadow-2";
 import { Header } from "../../components/Header";
 import uuid from "react-uuid";
 import Search from "../../components/Search";
+import useStore from "../../components/Store/Store";
 const { width, height } = Dimensions.get("window");
 const languages = ["c++", "java", "js", "python"];
+
 export default function UserAlgos({ navigation }) {
   const [Algos, setAlgos] = useState([]);
   const [language, setLanguage] = useState("");
@@ -34,10 +34,12 @@ export default function UserAlgos({ navigation }) {
   const [newAlgorithm, setNewAlgorithm] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const toast = useToast();
-
+  const [algocount, setAlgoCount] = useState(0);
+  const { user } = useStore((state) => ({
+    user: state.user,
+  }));
   const addnewAlgorithmName = async () => {
-    const idobj = await AsyncStorage.getItem("user");
-    const userId = JSON.parse(idobj).uid;
+    const userId = user.uid;
     const id = uuid();
     const topicRef = doc(db, "PersonalAlgos", userId, "personalAlgos", id);
     setDoc(topicRef, {
@@ -48,11 +50,11 @@ export default function UserAlgos({ navigation }) {
     setNewAlgorithmName("");
     setNewAlgorithm("");
     setLanguage("");
+    setAlgoCount(algocount + 1);
   };
 
   useEffect(async () => {
-    const idobj = await AsyncStorage.getItem("user");
-    const id = JSON.parse(idobj).uid;
+    const id = user.uid;
     const colRef = collection(db, "PersonalAlgos", id, "personalAlgos");
     getDocs(colRef).then((querySnapshot) => {
       let data = [];
@@ -65,9 +67,8 @@ export default function UserAlgos({ navigation }) {
       setAlgos(data);
       setSearchedAlgos(data);
       setIsLoading(false);
-      console.log(data);
     });
-  }, []);
+  }, [algocount]);
 
   const searchAlgo = (text) => {
     if (text !== "") {
@@ -79,19 +80,6 @@ export default function UserAlgos({ navigation }) {
       setSearchedAlgos(Algos);
     }
   };
-
-  // const [topics, setTopics] = useState([]);
-  // const [searchedTopic, setSearchedTopic] = useState([]);
-  // const searchTopic = (text) => {
-  //   if (text !== "") {
-  //     const searched = topics.filter((topic) => {
-  //       return topic.Name.toLowerCase().includes(text.toLowerCase());
-  //     });
-  //     setSearchedTopic(searched);
-  //   } else {
-  //     setSearchedTopic(topics);
-  //   }
-  // };
 
   if (isLoading) {
     return (
@@ -140,28 +128,31 @@ export default function UserAlgos({ navigation }) {
               marginBottom: height * 0.02,
             }}
           >
-            {/* <Input
+            <Select
+              customDropdownIconProps={{ color: "black", marginRight: 5 }}
+              style={{ color: "black" }}
+              _light={{
+                bg: "#969696",
+                borderRadius: 10,
+                fontFamily: "GbBold",
+                placeholderTextColor: "#515151",
+                margin: 1,
+              }}
               _dark={{
                 bg: "#969696",
-                color: "#fff",
                 borderRadius: 10,
-                fontFamily: "GbMed",
-                marginLeft: 3,
-                marginRight: 3,
-                margbiutBottom: 2,
+                fontFamily: "GbBold",
+                placeholderTextColor: "#515151",
+                margin: 1,
+                marginBottom: 2,
               }}
-              value={newAlgorithmName}
-              onChangeText={(text) => setNewAlgorithmName(text)}
-              placeholder="Add Name of Language"
-              placeholderTextColor="#4d4d4d"
-            />{" "} */}
-
-            <Select
+              selectedValueColor="red"
               selectedValue={language}
               accessibilityLabel="Select Language"
-              placeholder="Choose Service"
+              placeholder="Select Language"
               _selectedItem={{
-                bg: "teal.600",
+                bg: "red.900",
+                borderRadius: 10,
                 endIcon: <CheckIcon size="5" />,
               }}
               mt={1}
@@ -179,11 +170,11 @@ export default function UserAlgos({ navigation }) {
                 fontFamily: "GbMed",
                 marginLeft: 3,
                 marginRight: 3,
-                margbiutBottom: 2,
+                marginBottom: 3.5,
               }}
               value={newAlgorithmName}
               onChangeText={(text) => setNewAlgorithmName(text)}
-              placeholder="Add Name of Language"
+              placeholder="Add Name of Algorithm"
               placeholderTextColor="#4d4d4d"
             />
             <Input
@@ -194,9 +185,11 @@ export default function UserAlgos({ navigation }) {
                 fontFamily: "GbMed",
                 marginLeft: 3,
                 marginRight: 3,
-                marginBottom: 2,
+                marginBottom: 3.5,
               }}
               value={newAlgorithm}
+              multiline={true}
+              numberOfLines={4}
               onChangeText={(text) => setNewAlgorithm(text)}
               placeholder="Add Algorithm"
               placeholderTextColor="#4d4d4d"
@@ -219,9 +212,7 @@ export default function UserAlgos({ navigation }) {
                 }
               }}
             >
-              <Text _dark={{ bg: "#b53333" }} style={styles.text}>
-                Add Algorithm
-              </Text>
+              <Text style={styles.text}>Add Algorithm</Text>
             </TouchableOpacity>
           </Shadow>
         </Box>
@@ -246,15 +237,7 @@ export default function UserAlgos({ navigation }) {
                 distance={12}
                 offset={[12, 12]}
               >
-                <Text
-                  style={styles.box}
-                  _dark={{
-                    color: "#fff",
-                    borderRadius: 10,
-                    bg: "#26458c",
-                  }}
-                  fontSize="4xl"
-                >
+                <Text style={styles.box} fontSize="4xl">
                   {item.AlgoName}
                 </Text>
               </Shadow>
@@ -274,18 +257,21 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: width * 0.9,
     height: height * 0.1,
-    margin: height * 0.02,
     borderRadius: 10,
     textAlign: "center",
     color: "#f9d3b4",
     fontFamily: "GbBold",
     paddingTop: 7.5,
+    color: "#fff",
+    borderRadius: 10,
+    backgroundColor: "#26458c",
   },
   text: {
     color: "#f9d3b4",
     fontFamily: "GbBold",
     borderRadius: 10,
     padding: 10,
+    backgroundColor: "#b53333",
   },
   text1: {
     color: "#f9d3b4",

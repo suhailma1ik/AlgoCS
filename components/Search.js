@@ -11,12 +11,13 @@ export default function Search({ searchFunction }) {
         alignItems: "center",
         backgroundColor: "#181818",
         paddingTop: 7,
-        paddingBottom: 7,
+        paddingBottom: 5,
         borderRadius: 20,
         borderColor: "#212121",
         marginLeft: 1,
         marginRight: 1,
         marginTop: 5,
+        marginBottom: 2,
       }}
       _light={{
         justifyContent: "center",
@@ -62,7 +63,7 @@ export default function Search({ searchFunction }) {
             marginBottom: 2,
           }}
           onChangeText={(text) => searchFunction(text)}
-          placeholder="Topic Name"
+          placeholder="Search Topic Name"
           placeholderTextColor="#4d4d4d"
         ></Input>
       </Box>
