@@ -23,6 +23,7 @@ import { useFonts } from "expo-font";
 import { Shadow } from "react-native-shadow-2";
 import Search from "../../components/Search";
 import useStore from "../../components/Store/Store";
+import { StatusBar } from "expo-status-bar";
 const { width, height } = Dimensions.get("window");
 export default function HomeScreen({ navigation }) {
   const [fontsLoaded] = useFonts({
@@ -36,7 +37,6 @@ export default function HomeScreen({ navigation }) {
   const [newTopic, setNewTopic] = useState("");
   const [isLoaded, setIsLoaded] = useState(true);
   const { colorMode, toggleColorMode } = useColorMode();
-  // const [userRole, setUserRole] = useState("user");
   const { user, userRole } = useStore((state) => ({
     user: state.user,
     userRole: state.userRole,
@@ -59,15 +59,6 @@ export default function HomeScreen({ navigation }) {
       toggleColorMode();
     }
   }, [count]);
-
-  // useEffect(() => {
-  //   async function getRole() {
-  //     const role = await AsyncStorage.getItem("userRole");
-  //     setUserRole(role);
-  //   }
-
-  //   getRole();
-  // }, []);
 
   const addNewTopic = () => {
     const id = uuid();

@@ -10,7 +10,6 @@ import { collection, doc, getDocs, setDoc } from "firebase/firestore";
 import { db } from "../../Firebase";
 import {
   Box,
-  Button,
   Text,
   Input,
   FlatList,
@@ -20,7 +19,6 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Header } from "../../components/Header";
 import uuid from "react-uuid";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Shadow } from "react-native-shadow-2";
 
 const { width, height } = Dimensions.get("window");
@@ -39,13 +37,7 @@ export default function LanguagesScreen({ navigation, route }) {
   const { colorMode, toggleColorMode } = useColorMode();
   const toast = useToast();
 
-  const getStoredLanguages = async (key) => {
-    const jsonValue = await AsyncStorage.getItem(key);
-    const value = JSON.parse(jsonValue);
-    return value !== null ? value : null;
-  };
-
-  const getLanguageFromFirebase = async (key) => {
+  const getLanguageFromFirebase = async () => {
     const colRef = collection(db, "Topics", id, topic, algoId, algoName);
     getDocs(colRef).then(async (querySnapshot) => {
       let data = [];
@@ -56,8 +48,6 @@ export default function LanguagesScreen({ navigation, route }) {
         ];
       });
       setLanguages(data);
-      const jsonValue = JSON.stringify(data);
-      await AsyncStorage.setItem(key, jsonValue);
     });
   };
 

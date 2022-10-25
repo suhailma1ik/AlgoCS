@@ -6,7 +6,6 @@ import {
   Platform,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   Box,
@@ -36,9 +35,8 @@ export default function UserAlgos({ navigation }) {
   const [isLoading, setIsLoading] = useState(true);
   const toast = useToast();
   const [algocount, setAlgoCount] = useState(0);
-  const { user, userRole } = useStore((state) => ({
+  const { user } = useStore((state) => ({
     user: state.user,
-    userRole: state.userRole,
   }));
   const addnewAlgorithmName = async () => {
     const userId = user.uid;
@@ -259,7 +257,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: width * 0.9,
     height: height * 0.1,
-    margin: height * 0.02,
     borderRadius: 10,
     textAlign: "center",
     color: "#f9d3b4",

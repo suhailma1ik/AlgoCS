@@ -1,13 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  HStack,
-  IconButton,
-  Icon,
-  Text,
-  StatusBar,
-  Box,
-  useToast,
-} from "native-base";
+import { HStack, IconButton, Icon, Text, Box, useToast } from "native-base";
 import { Dimensions } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -15,6 +7,7 @@ import { useFonts } from "expo-font";
 import { Shadow } from "react-native-shadow-2";
 import { TouchableOpacity } from "react-native";
 import useStore from "./Store/Store";
+import { StatusBar } from "expo-status-bar";
 const { width, height } = Dimensions.get("window");
 
 export function Header({ Topic }) {
@@ -38,7 +31,7 @@ export function Header({ Topic }) {
   });
   return (
     <Box>
-      <StatusBar bg="#3700B3" barStyle="light-content" />
+      <StatusBar style="light" backgroundColor="#1c1f20" />
       <HStack py="3" px="1" alignItems="center" w="100%" maxW={width * 0.95}>
         <HStack alignItems="center">
           {Topic === "Home" ? null : (

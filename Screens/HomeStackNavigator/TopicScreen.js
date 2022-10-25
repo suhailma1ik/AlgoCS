@@ -35,9 +35,8 @@ export default function TopicScreen({ navigation, route }) {
   const { colorMode, toggleColorMode } = useColorMode();
   const toast = useToast();
 
-  const { user, userRole } = useStore((state) => ({
+  const { user } = useStore((state) => ({
     user: state.user,
-    userRole: state.userRole,
   }));
 
   useEffect(async () => {
