@@ -74,7 +74,10 @@ export default function LoginScreen({ navigation }) {
       <SafeAreaView>
         <Header Topic="Sign in" />
         <Center _dark={{ bg: "#1c1f20" }} _light={{ bg: "#1c1f20" }} flex={1}>
-          <Box width={width * 0.918} alignItems="center">
+          <Box
+            width={Platform.OS === "android" ? width * 0.99 : width * 0.918}
+            alignItems="center"
+          >
             <Heading
               size="lg"
               fontWeight="600"

@@ -75,7 +75,10 @@ export default function SignUpScreen({ navigation }) {
       <SafeAreaView>
         <Header Topic="Sign Up" />
         <Center _dark={{ bg: "#1c1f20" }} _light={{ bg: "#1c1f20" }} flex={1}>
-          <Box width={width * 0.918} alignItems="center">
+          <Box
+            width={Platform.OS === "android" ? width * 0.99 : width * 0.918}
+            alignItems="center"
+          >
             <Heading
               size="lg"
               fontSize={30}
