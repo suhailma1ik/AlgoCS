@@ -35,8 +35,8 @@ export default function TopicScreen({ navigation, route }) {
   const { colorMode, toggleColorMode } = useColorMode();
   const toast = useToast();
 
-  const { user } = useStore((state) => ({
-    user: state.user,
+  const { userRole } = useStore((state) => ({
+    userRole: state.userRole,
   }));
 
   useEffect(async () => {
@@ -98,23 +98,12 @@ export default function TopicScreen({ navigation, route }) {
       <SafeAreaView>
         <Header navigation={navigation} Topic={route.params.topic} />
 
-        {user === "admin" ? (
+        {userRole === "admin" ? (
           <Box
             _dark={{
               justifyContent: "center",
               alignItems: "center",
               backgroundColor: "#181818",
-              paddingTop: 7,
-              paddingBottom: 7,
-              borderRadius: 20,
-              borderColor: "#212121",
-              marginLeft: 1,
-              marginRight: 1,
-            }}
-            _light={{
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: "#50AF8E",
               paddingTop: 7,
               paddingBottom: 7,
               borderRadius: 20,
@@ -134,16 +123,6 @@ export default function TopicScreen({ navigation, route }) {
               }}
             >
               <Input
-                _light={{
-                  bg: "#3E886E",
-                  borderRadius: 10,
-                  placeholderTextColor: "#E8E8E8",
-                  color: "#E8E8E8",
-                  borderColor: "#3E886E",
-                  fontFamily: "GbMed",
-                  marginLeft: 3,
-                  marginRight: 3,
-                }}
                 _dark={{
                   bg: "#969696",
                   color: "#fff",
@@ -158,45 +137,25 @@ export default function TopicScreen({ navigation, route }) {
                 placeholderTextColor="#4d4d4d"
               />{" "}
             </Box>
-            {colorMode === "dark" ? (
-              <Shadow startColor="#2c2c2c" distance={15} offset={[-5, -5]}>
-                <Text
-                  _dark={{ bg: "#b53333" }}
-                  _light={{ bg: "#a83232" }}
-                  onPress={() => {
-                    if (newAlgorithmName !== "") {
-                      addNewAlgo();
-                    } else {
-                      toast.show({
-                        description: "Please Enter Name of Question",
-                      });
-                    }
-                  }}
-                  style={styles.text}
-                >
-                  Add Question
-                </Text>
-              </Shadow>
-            ) : (
-              <Shadow startColor="#3e886e" distance={15} offset={[-5, -5]}>
-                <Text
-                  _dark={{ bg: "#b53333" }}
-                  _light={{ bg: "#a83232" }}
-                  onPress={() => {
-                    if (newAlgorithmName !== "") {
-                      addNewAlgo();
-                    } else {
-                      toast.show({
-                        description: "Please Enter Name of Question",
-                      });
-                    }
-                  }}
-                  style={styles.text}
-                >
-                  Add Question
-                </Text>
-              </Shadow>
-            )}
+
+            <Shadow startColor="#2c2c2c" distance={15} offset={[-5, -5]}>
+              <Text
+                _dark={{ bg: "#b53333" }}
+                _light={{ bg: "#a83232" }}
+                onPress={() => {
+                  if (newAlgorithmName !== "") {
+                    addNewAlgo();
+                  } else {
+                    toast.show({
+                      description: "Please Enter Name of Question",
+                    });
+                  }
+                }}
+                style={styles.text}
+              >
+                Add Question
+              </Text>
+            </Shadow>
           </Box>
         ) : null}
         <Search searchFunction={searchAlgos} />
@@ -284,6 +243,7 @@ const styles = StyleSheet.create({
     color: "#f9d3b4",
     fontFamily: "GbBold",
     paddingTop: 7.5,
+    fontSize: Platform.OS === "android" ? 22 : 30,
   },
   text: {
     color: "#f9d3b4",

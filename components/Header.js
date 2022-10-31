@@ -44,7 +44,11 @@ export function Header({ Topic }) {
             fontSize="20"
             fontWeight="bold"
             color="#c2c8d4"
-            style={{ fontFamily: "GbBold" }}
+            style={{
+              fontFamily: "GbBold",
+              fontWeight: "bold",
+              marginLeft: width * 0.01,
+            }}
           >
             {Topic}
           </Text>
