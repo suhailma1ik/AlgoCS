@@ -243,6 +243,7 @@ const styles = StyleSheet.create({
     color: "#f9d3b4",
     fontFamily: "GbBold",
     paddingTop: 7.5,
+    fontSize: Platform.OS === "android" ? 22 : 30,
   },
   text: {
     color: "#f9d3b4",

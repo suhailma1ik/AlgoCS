@@ -42,8 +42,6 @@ export default function HomeScreen({ navigation }) {
     userRole: state.userRole,
   }));
   const toast = useToast();
-
-  const drk = "#2c2c2c#3e886e";
   useEffect(async () => {
     const colRef = collection(db, "Topics");
     getDocs(colRef).then((querySnapshot) => {
@@ -196,11 +194,11 @@ export default function HomeScreen({ navigation }) {
         >
           <Shadow Shadow startColor="#2c2c2c" distance={12} offset={[12, 12]}>
             <Text
-              style={styles.box}
+              style={styles.box1}
               _dark={{
                 color: "#fff",
                 borderRadius: 10,
-                bg: "#26458c",
+                bg: "#792222",
               }}
               __light={{ color: "#AF8E50" }}
               fontSize="4xl"
@@ -266,6 +264,20 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     textAlign: "center",
     color: "#f9d3b4",
+    fontFamily: "GbBold",
+    paddingTop: 7.5,
+  },
+  box1: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    width: width * 0.9,
+    height: height * 0.1,
+    margin: height * 0.02,
+    borderRadius: 10,
+    textAlign: "center",
+    color: "#f3a86b",
     fontFamily: "GbBold",
     paddingTop: 7.5,
   },
