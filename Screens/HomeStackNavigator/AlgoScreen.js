@@ -119,7 +119,7 @@ export default function AlgoScreen({ navigation, route }) {
           {/* code below this */}
           <Box mb={height * 0.02}>
             <Select
-              width={width * 0.918}
+              width={Platform.OS != "android" ? width * 0.918 : width * 0.96}
               customDropdownIconProps={{ color: "black", marginRight: 5 }}
               style={styles.Icon}
               _light={{
