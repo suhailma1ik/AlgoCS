@@ -55,7 +55,7 @@ export default function LanguagesScreen({ navigation, route }) {
     const key = topic + algoName;
     getLanguageFromFirebase(key);
     setIsLoaded(false);
-  }, []);
+  }, [languagecnt]);
   const addNewLanguage = () => {
     const langId = uuid();
     const Algoref = doc(db, "Topics", id, topic, algoId, algoName, langId);
@@ -170,6 +170,8 @@ export default function LanguagesScreen({ navigation, route }) {
                   marginRight: 3,
                   marginBottom: 2,
                 }}
+                multiline={true}
+                numberOfLines={4}
                 value={newAlgorithm}
                 onChangeText={(text) => setNewAlgorithm(text)}
                 placeholder="Add Algorithm"

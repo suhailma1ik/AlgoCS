@@ -102,9 +102,11 @@ export default function HomeScreen({ navigation }) {
       style={{ overflow: Platform.OS === "android" ? "hidden" : "scroll" }}
       alignItems="center"
     >
-      <SafeAreaView>
+      <SafeAreaView
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
+      >
         <Header Topic="Home" />
-
         {userRole === "admin" ? (
           <Box
             _dark={{
@@ -209,6 +211,8 @@ export default function HomeScreen({ navigation }) {
         </TouchableOpacity>
         <FlatList
           data={searchedTopic}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
           renderItem={({ item, index }) => (
             <TouchableOpacity
               onPress={() => {

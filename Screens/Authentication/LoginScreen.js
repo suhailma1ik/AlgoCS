@@ -1,4 +1,9 @@
-import { StyleSheet, TouchableOpacity, Dimensions } from "react-native";
+import {
+  StyleSheet,
+  TouchableOpacity,
+  Dimensions,
+  Platform,
+} from "react-native";
 import React, { useState } from "react";
 import {
   Box,

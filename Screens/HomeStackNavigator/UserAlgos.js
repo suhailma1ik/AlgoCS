@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Platform,
+  Modal,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -35,6 +36,7 @@ export default function UserAlgos({ navigation }) {
   const [isLoading, setIsLoading] = useState(true);
   const toast = useToast();
   const [algocount, setAlgoCount] = useState(0);
+  const [modalVisible, setModalVisible] = useState(false);
   const { user } = useStore((state) => ({
     user: state.user,
   }));
@@ -104,118 +106,279 @@ export default function UserAlgos({ navigation }) {
     >
       <SafeAreaView>
         <Header navigation={navigation} Topic={"My Algos"} />
-
-        <Box
-          _dark={{
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundColor: "#181818",
-            paddingTop: 7,
-            paddingBottom: 7,
-            borderRadius: 20,
-            borderColor: "#212121",
-            marginLeft: 1,
-            marginRight: 1,
-          }}
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
+        {Platform.OS === "web" ? (
           <Box
+            _dark={{
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: "#181818",
+              paddingTop: 7,
+              paddingBottom: 7,
+              borderRadius: 20,
+              borderColor: "#212121",
+              marginLeft: 1,
+              marginRight: 1,
+            }}
             style={{
-              width: width * 0.9,
-              marginBottom: height * 0.02,
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            <Select
-              customDropdownIconProps={{ color: "black", marginRight: 5 }}
-              style={{ color: "black" }}
-              _light={{
-                bg: "#969696",
-                borderRadius: 10,
-                fontFamily: "GbBold",
-                placeholderTextColor: "#515151",
-                margin: 1,
+            <Box
+              style={{
+                width: width * 0.9,
+                marginBottom: height * 0.02,
+                justifyContent: "center",
+                alignItems: "center",
               }}
-              _dark={{
-                bg: "#969696",
-                borderRadius: 10,
-                fontFamily: "GbBold",
-                placeholderTextColor: "#515151",
-                margin: 1,
-                marginBottom: 2,
-              }}
-              selectedValueColor="red"
-              selectedValue={language}
-              accessibilityLabel="Select Language"
-              placeholder="Select Language"
-              _selectedItem={{
-                bg: "red.900",
-                borderRadius: 10,
-                endIcon: <CheckIcon size="5" />,
-              }}
-              mt={1}
-              onValueChange={(itemValue) => setLanguage(itemValue)}
             >
-              {languages.map((lang) => {
-                return <Select.Item label={lang} value={lang} />;
-              })}
-            </Select>
-            <Input
-              _dark={{
-                bg: "#969696",
-                color: "#fff",
-                borderRadius: 10,
-                fontFamily: "GbMed",
-                marginLeft: 3,
-                marginRight: 3,
-                marginBottom: 3.5,
-              }}
-              value={newAlgorithmName}
-              onChangeText={(text) => setNewAlgorithmName(text)}
-              placeholder="Add Name of Algorithm"
-              placeholderTextColor="#4d4d4d"
-            />
-            <Input
-              _dark={{
-                bg: "#969696",
-                color: "#fff",
-                borderRadius: 10,
-                fontFamily: "GbMed",
-                marginLeft: 3,
-                marginRight: 3,
-                marginBottom: 3.5,
-              }}
-              value={newAlgorithm}
-              multiline={true}
-              numberOfLines={4}
-              onChangeText={(text) => setNewAlgorithm(text)}
-              placeholder="Add Algorithm"
-              placeholderTextColor="#4d4d4d"
-            />
+              <Select
+                customDropdownIconProps={{ color: "black", marginRight: 5 }}
+                style={{ color: "black" }}
+                _light={{
+                  bg: "#969696",
+                  borderRadius: 10,
+                  fontFamily: "GbBold",
+                  placeholderTextColor: "#515151",
+                  margin: 1,
+                }}
+                _dark={{
+                  bg: "#969696",
+                  borderRadius: 10,
+                  fontFamily: "GbBold",
+                  placeholderTextColor: "#515151",
+                  margin: 1,
+                  marginBottom: 2,
+                  width: width * 0.8,
+                }}
+                selectedValueColor="red"
+                selectedValue={language}
+                accessibilityLabel="Select Language"
+                placeholder="Select Language"
+                _selectedItem={{
+                  bg: "red.900",
+                  borderRadius: 10,
+                  endIcon: <CheckIcon size="5" />,
+                }}
+                mt={1}
+                onValueChange={(itemValue) => setLanguage(itemValue)}
+              >
+                {languages.map((lang) => {
+                  return <Select.Item label={lang} value={lang} />;
+                })}
+              </Select>
+              <Input
+                _dark={{
+                  bg: "#969696",
+                  color: "#fff",
+                  borderRadius: 10,
+                  fontFamily: "GbMed",
+                  marginLeft: 3,
+                  marginRight: 3,
+                  marginBottom: 3.5,
+                  width: width * 0.8,
+                }}
+                value={newAlgorithmName}
+                onChangeText={(text) => setNewAlgorithmName(text)}
+                placeholder="Add Name of Algorithm"
+                placeholderTextColor="#4d4d4d"
+              />
+              <Input
+                _dark={{
+                  bg: "#969696",
+                  color: "#fff",
+                  borderRadius: 10,
+                  fontFamily: "GbMed",
+                  marginLeft: 3,
+                  marginRight: 3,
+                  marginBottom: 3.5,
+                  width: width * 0.8,
+                }}
+                value={newAlgorithm}
+                multiline={true}
+                numberOfLines={4}
+                onChangeText={(text) => setNewAlgorithm(text)}
+                placeholder="Add Algorithm"
+                placeholderTextColor="#4d4d4d"
+              />
+            </Box>
+            <Shadow startColor="#2c2c2c" distance={15} offset={[-5, -5]}>
+              <TouchableOpacity
+                onPress={() => {
+                  if (
+                    newAlgorithmName !== "" &&
+                    newAlgorithm !== "" &&
+                    language !== ""
+                  ) {
+                    addnewAlgorithmName();
+                    setModalVisible(false);
+                  } else {
+                    toast.show({
+                      description: "Please fill all the fields",
+                    });
+                  }
+                }}
+              >
+                <Text style={styles.text}>Add Algorithm</Text>
+              </TouchableOpacity>
+            </Shadow>
           </Box>
-
-          <Shadow startColor="#2c2c2c" distance={15} offset={[-5, -5]}>
-            <TouchableOpacity
-              onPress={() => {
-                if (
-                  newAlgorithmName !== "" &&
-                  newAlgorithm !== "" &&
-                  language !== ""
-                ) {
-                  addnewAlgorithmName();
-                } else {
-                  toast.show({
-                    description: "Please fill all the fields",
-                  });
-                }
+        ) : (
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              setModalVisible(!modalVisible);
+            }}
+          >
+            <Box
+              _dark={{
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "#181818",
+                paddingTop: 7,
+                paddingBottom: 7,
+                borderRadius: 20,
+                borderColor: "#212121",
+                marginLeft: 1,
+                marginRight: 1,
+              }}
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
-              <Text style={styles.text}>Add Algorithm</Text>
-            </TouchableOpacity>
-          </Shadow>
-        </Box>
+              <Box
+                style={{
+                  width: width * 0.9,
+                  marginBottom: height * 0.02,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Select
+                  customDropdownIconProps={{ color: "black", marginRight: 5 }}
+                  style={{ color: "black" }}
+                  _light={{
+                    bg: "#969696",
+                    borderRadius: 10,
+                    fontFamily: "GbBold",
+                    placeholderTextColor: "#515151",
+                    margin: 1,
+                  }}
+                  _dark={{
+                    bg: "#969696",
+                    borderRadius: 10,
+                    fontFamily: "GbBold",
+                    placeholderTextColor: "#515151",
+                    margin: 1,
+                    marginBottom: 2,
+                    width: width * 0.8,
+                  }}
+                  selectedValueColor="red"
+                  selectedValue={language}
+                  accessibilityLabel="Select Language"
+                  placeholder="Select Language"
+                  _selectedItem={{
+                    bg: "red.900",
+                    borderRadius: 10,
+                    endIcon: <CheckIcon size="5" />,
+                  }}
+                  mt={1}
+                  onValueChange={(itemValue) => setLanguage(itemValue)}
+                >
+                  {languages.map((lang) => {
+                    return <Select.Item label={lang} value={lang} />;
+                  })}
+                </Select>
+                <Input
+                  _dark={{
+                    bg: "#969696",
+                    color: "#fff",
+                    borderRadius: 10,
+                    fontFamily: "GbMed",
+                    marginLeft: 3,
+                    marginRight: 3,
+                    marginBottom: 3.5,
+                    width: width * 0.8,
+                  }}
+                  value={newAlgorithmName}
+                  onChangeText={(text) => setNewAlgorithmName(text)}
+                  placeholder="Add Name of Algorithm"
+                  placeholderTextColor="#4d4d4d"
+                />
+                <Input
+                  _dark={{
+                    bg: "#969696",
+                    color: "#fff",
+                    borderRadius: 10,
+                    fontFamily: "GbMed",
+                    marginLeft: 3,
+                    marginRight: 3,
+                    marginBottom: 3.5,
+                    width: width * 0.8,
+                  }}
+                  value={newAlgorithm}
+                  multiline={true}
+                  numberOfLines={4}
+                  onChangeText={(text) => setNewAlgorithm(text)}
+                  placeholder="Add Algorithm"
+                  placeholderTextColor="#4d4d4d"
+                />
+              </Box>
+              <Shadow startColor="#2c2c2c" distance={15} offset={[-5, -5]}>
+                <TouchableOpacity
+                  onPress={() => {
+                    if (
+                      newAlgorithmName !== "" &&
+                      newAlgorithm !== "" &&
+                      language !== ""
+                    ) {
+                      addnewAlgorithmName();
+                    } else {
+                      toast.show({
+                        description: "Please fill all the fields",
+                      });
+                    }
+                  }}
+                >
+                  <Text style={styles.text}>Add Algorithm</Text>
+                </TouchableOpacity>
+              </Shadow>
+            </Box>
+          </Modal>
+        )}
+        {Platform.OS !== "web" ? (
+          <Box
+            _dark={{
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: "#181818",
+              paddingTop: 7,
+              paddingBottom: 7,
+              borderRadius: 20,
+              borderColor: "#212121",
+              marginLeft: 1,
+              marginRight: 1,
+            }}
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Shadow startColor="#2c2c2c" distance={15} offset={[-5, -5]}>
+              <TouchableOpacity
+                onPress={() => {
+                  setModalVisible(true);
+                }}
+              >
+                <Text style={styles.text}>Add Algorithm</Text>
+              </TouchableOpacity>
+            </Shadow>
+          </Box>
+        ) : null}
+
         <Search searchFunction={searchAlgo} />
         <FlatList
           data={searchedAlgos}
@@ -230,6 +393,8 @@ export default function UserAlgos({ navigation }) {
               }
               key={index}
               style={{ marginTop: height * 0.01 }}
+              showsVerticalScrollIndicator={false}
+              showsHorizontalScrollIndicator={false}
             >
               <Shadow
                 Shadow

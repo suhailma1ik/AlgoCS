@@ -80,7 +80,6 @@ export default function AlgoScreen({ navigation, route }) {
     const value = getStoredTheme();
     setLocalTheme(value);
     setTheme(value);
-    console.log(value);
     const algonr = route.params.algo;
     setAlgo(algonr);
     setIsLoaded(false);
