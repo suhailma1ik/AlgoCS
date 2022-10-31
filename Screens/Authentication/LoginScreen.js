@@ -44,7 +44,7 @@ export default function LoginScreen({ navigation }) {
     const userRole = await getDoc(userRef);
     setUserRoleZus(userRole.data().role);
   };
-
+  // safeArea p="2" py="8" w="90%" maxW="290"
   const Signin = () => {
     const auth = getAuth();
     signInWithEmailAndPassword(auth, email, password)
@@ -74,7 +74,7 @@ export default function LoginScreen({ navigation }) {
       <SafeAreaView>
         <Header Topic="Sign in" />
         <Center _dark={{ bg: "#1c1f20" }} _light={{ bg: "#1c1f20" }} flex={1}>
-          <Box safeArea p="2" py="8" w="90%" maxW="290">
+          <Box width={width * 0.918} alignItems="center">
             <Heading
               size="lg"
               fontWeight="600"
@@ -101,6 +101,7 @@ export default function LoginScreen({ navigation }) {
             <VStack space={3} mt="5">
               <FormControl>
                 <Input
+                  width={Platform.OS === "android" ? width * 0.8 : width * 0.2}
                   style={{
                     backgroundColor: "#2d333f",
                     color: "#9ca6b9",
@@ -119,6 +120,7 @@ export default function LoginScreen({ navigation }) {
               </FormControl>
               <FormControl>
                 <Input
+                  width={Platform.OS === "android" ? width * 0.8 : width * 0.2}
                   style={{
                     backgroundColor: "#2d333f",
                     color: "#9ca6b9",

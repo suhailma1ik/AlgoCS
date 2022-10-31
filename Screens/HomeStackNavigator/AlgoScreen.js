@@ -88,7 +88,7 @@ export default function AlgoScreen({ navigation, route }) {
   if (isLoaded) {
     return (
       <Box
-        _dark={{ bg: "#212426" }}
+        _dark={{ bg: "#1c1f20" }}
         _light={{ bg: "#dbd9d9" }}
         flex={1}
         justifyContent="center"
@@ -101,10 +101,13 @@ export default function AlgoScreen({ navigation, route }) {
 
   return (
     <Box
-      _dark={{ bg: "#212426" }}
+      _dark={{ bg: "#1c1f20" }}
       _light={{ bg: "#dbd9d9" }}
-      style={{ overflow: Platform.OS === "android" ? "hidden" : "scroll" }}
+      style={{
+        overflow: Platform.OS === "android" ? "hidden" : "scroll",
+      }}
       flex={1}
+      alignItems="center"
     >
       <SafeAreaView>
         <Header
@@ -116,6 +119,7 @@ export default function AlgoScreen({ navigation, route }) {
           {/* code below this */}
           <Box mb={height * 0.02}>
             <Select
+              width={width * 0.918}
               customDropdownIconProps={{ color: "black", marginRight: 5 }}
               style={styles.Icon}
               _light={{
