@@ -192,7 +192,7 @@ export default function TopicScreen({ navigation, route }) {
                       bg: "#26458c",
                     }}
                     __light={{ color: "#AF8E50" }}
-                    fontSize="4xl"
+                    fontSize={width * 0.01}
                   >
                     {item.AlgoName}
                   </Text>
@@ -215,7 +215,7 @@ export default function TopicScreen({ navigation, route }) {
                       bg: "#26458c",
                     }}
                     __light={{ color: "#AF8E50" }}
-                    fontSize="4xl"
+                    fontSize={width * 0.05 > 40 ? 40 : width * 0.05}
                   >
                     {item.AlgoName}
                   </Text>
