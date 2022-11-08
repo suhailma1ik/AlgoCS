@@ -53,6 +53,9 @@ export default function TopicScreen({ navigation, route }) {
       setSearchedAlgos(data);
       setIsLoaded(false);
     });
+    if (colorMode === "light") {
+      toggleColorMode();
+    }
   }, [algocnt]);
 
   const addNewAlgo = () => {
@@ -96,6 +99,7 @@ export default function TopicScreen({ navigation, route }) {
       style={{ overflow: Platform.OS === "android" ? "hidden" : "scroll" }}
     >
       <SafeAreaView>
+        {/* <Header navigation={navigation} Topic={route.params.topic} /> */}
         <Header navigation={navigation} Topic={route.params.topic} />
 
         {userRole === "admin" ? (

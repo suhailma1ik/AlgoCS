@@ -139,17 +139,6 @@ export default function LoginScreen({ navigation }) {
                   type="password"
                   variant="unstyled"
                 />
-                {/* <Link
-              _text={{
-                fontSize: "xs",
-                fontWeight: "500",
-                color: "indigo.500",
-              }}
-              alignSelf="flex-end"
-              mt="1"
-            >
-              Forget Password?
-            </Link> */}
               </FormControl>
               <HStack mt="3" justifyContent="center">
                 <Box style={{ marginTop: 20, justifyContent: "center" }}>

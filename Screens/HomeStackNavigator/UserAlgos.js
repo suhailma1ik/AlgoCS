@@ -16,6 +16,7 @@ import {
   Select,
   useToast,
   Text,
+  useColorMode,
 } from "native-base";
 import { collection, doc, getDocs, setDoc } from "firebase/firestore";
 import { db } from "../../Firebase";
@@ -35,6 +36,7 @@ export default function UserAlgos({ navigation }) {
   const [newAlgorithm, setNewAlgorithm] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const toast = useToast();
+  const { colorMode, toggleColorMode } = useColorMode();
   const [algocount, setAlgoCount] = useState(0);
   const [modalVisible, setModalVisible] = useState(false);
   const { user } = useStore((state) => ({
@@ -70,6 +72,9 @@ export default function UserAlgos({ navigation }) {
       setSearchedAlgos(data);
       setIsLoading(false);
     });
+    if (colorMode === "light") {
+      toggleColorMode();
+    }
   }, [algocount]);
 
   const searchAlgo = (text) => {
@@ -393,8 +398,6 @@ export default function UserAlgos({ navigation }) {
               }
               key={index}
               style={{ marginTop: height * 0.01 }}
-              showsVerticalScrollIndicator={false}
-              showsHorizontalScrollIndicator={false}
             >
               <Shadow
                 Shadow

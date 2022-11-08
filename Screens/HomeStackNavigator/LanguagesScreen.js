@@ -20,6 +20,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Header } from "../../components/Header";
 import uuid from "react-uuid";
 import { Shadow } from "react-native-shadow-2";
+import useStore from "../../components/Store/Store";
 
 const { width, height } = Dimensions.get("window");
 
@@ -33,7 +34,9 @@ export default function LanguagesScreen({ navigation, route }) {
   const [newAlgorithm, setNewAlgorithm] = useState("");
   const [languagecnt, setLanguagecnt] = useState(0);
   const [isLoaded, setIsLoaded] = useState(true);
-  const [user, setUser] = useState("admin");
+  const { userRole } = useStore((state) => ({
+    userRole: state.userRole,
+  }));
   const { colorMode, toggleColorMode } = useColorMode();
   const toast = useToast();
 
@@ -55,6 +58,9 @@ export default function LanguagesScreen({ navigation, route }) {
     const key = topic + algoName;
     getLanguageFromFirebase(key);
     setIsLoaded(false);
+    if (colorMode === "light") {
+      toggleColorMode();
+    }
   }, [languagecnt]);
   const addNewLanguage = () => {
     const langId = uuid();
@@ -89,7 +95,7 @@ export default function LanguagesScreen({ navigation, route }) {
     >
       <SafeAreaView>
         <Header navigation={navigation} Topic={route.params.algoName} />
-        {user === "admin" ? (
+        {userRole === "admin" ? (
           <Box
             _dark={{
               justifyContent: "center",

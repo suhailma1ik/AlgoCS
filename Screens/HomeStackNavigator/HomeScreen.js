@@ -203,7 +203,7 @@ export default function HomeScreen({ navigation }) {
               __light={{ color: "#AF8E50" }}
               fontSize="4xl"
             >
-              Add Your Algos
+              Add My Algos
             </Text>
           </Shadow>
         </TouchableOpacity>
@@ -239,7 +239,7 @@ export default function HomeScreen({ navigation }) {
                     bg: "#26458c",
                   }}
                   __light={{ color: "#AF8E50" }}
-                  fontSize="4xl"
+                  fontSize={width * 0.05 > 40 ? 40 : width * 0.08}
                 >
                   {item.Name}
                 </Text>

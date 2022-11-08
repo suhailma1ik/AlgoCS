@@ -83,6 +83,9 @@ export default function AlgoScreen({ navigation, route }) {
     const algonr = route.params.algo;
     setAlgo(algonr);
     setIsLoaded(false);
+    if (colorMode === "light") {
+      toggleColorMode();
+    }
   }, []);
 
   if (isLoaded) {

@@ -7,13 +7,38 @@ import AuthenticationStack from "./Screens/Authentication/AuthenticationStack";
 import HomeStackNavigator from "./Screens/HomeStackNavigator/HomeStackNavigator";
 import { LogBox } from "react-native";
 
+const linking = {
+  prefixes: [
+    /* your linking prefixes */
+  ],
+  config: {
+    screens: {
+      HomeStack: {
+        screens: {
+          Home: "/",
+          Topic: "topic",
+          Algo: "algo",
+          Languages: "languages",
+          UserAlgos: "useralgos",
+        },
+      },
+      AuthStack: {
+        screens: {
+          Login: "login",
+          SignUp: "Signup",
+        },
+      },
+    },
+  },
+};
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   LogBox.ignoreLogs(["Setting a timer"]);
   return (
     <NativeBaseProvider>
-      <NavigationContainer>
+      <NavigationContainer  >
         <Stack.Navigator
           screenOptions={{
             headerShown: false,
