@@ -38,7 +38,7 @@ export default function App() {
   LogBox.ignoreLogs(["Setting a timer"]);
   return (
     <NativeBaseProvider>
-      <NavigationContainer  >
+      <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
             headerShown: false,
