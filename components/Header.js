@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { HStack, IconButton, Icon, Text, Box, useToast } from "native-base";
-import { Dimensions } from "react-native";
+import { Dimensions, Linking } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { Shadow } from "react-native-shadow-2";
 import { TouchableOpacity } from "react-native";
 import useStore from "./Store/Store";
 import { StatusBar } from "expo-status-bar";
+import { useNavigation } from "@react-navigation/native";
 const { width, height } = Dimensions.get("window");
-
+const url = "https://forms.gle/PYazYWAZcdfNdmoW9";
 export function Header({ Topic }) {
   const navigation = useNavigation();
   const toast = useToast();
@@ -44,7 +44,11 @@ export function Header({ Topic }) {
             fontSize="20"
             fontWeight="bold"
             color="#c2c8d4"
-            style={{ fontFamily: "GbBold" }}
+            style={{
+              fontFamily: "GbBold",
+              fontWeight: "bold",
+              marginLeft: width * 0.01,
+            }}
           >
             {Topic}
           </Text>
@@ -56,6 +60,42 @@ export function Header({ Topic }) {
             justifyContent="flex-end"
             marginLeft={0}
           >
+            <Box
+              style={{
+                marginRight: width * 0.03,
+              }}
+            >
+              <TouchableOpacity
+                onPress={async () => {
+                  await Linking.openURL(url);
+                }}
+              >
+                <Shadow
+                  Shadow
+                  startColor="#2c2c2c"
+                  distance={10}
+                  offset={[1, 1]}
+                >
+                  <Text
+                    fontWeight="bold"
+                    style={{
+                      color: "#f9d3b4",
+                      fontFamily: "GbBold",
+                      fontWeight: "bold",
+                      borderColor: "transparent",
+                      borderWidth: 1,
+                      borderRadius: 10,
+                      padding: 10,
+                      backgroundColor: "#1a1a1a",
+                    }}
+                    fontSize="xs"
+                  >
+                    Feedback
+                  </Text>
+                </Shadow>
+              </TouchableOpacity>
+            </Box>
+
             <Box bgColor="transparent">
               {userRole === null ? (
                 <TouchableOpacity

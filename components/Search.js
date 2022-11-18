@@ -19,17 +19,6 @@ export default function Search({ searchFunction }) {
         marginTop: 5,
         marginBottom: 2,
       }}
-      _light={{
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#50AF8E",
-        paddingTop: 7,
-        paddingBottom: 7,
-        borderRadius: 20,
-        borderColor: "#212121",
-        marginLeft: 1,
-        marginRight: 1,
-      }}
       style={{
         justifyContent: "center",
         alignItems: "center",
@@ -39,20 +28,11 @@ export default function Search({ searchFunction }) {
         style={{
           width: width * 0.9,
           marginBottom: height * 0.02,
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
         <Input
-          _light={{
-            bg: "#3E886E",
-            borderRadius: 10,
-            placeholderTextColor: "#E8E8E8",
-            color: "#E8E8E8",
-            borderColor: "#3E886E",
-            fontFamily: "GbMed",
-            marginLeft: 1,
-            marginRight: 1,
-            marginBottom: 2,
-          }}
           _dark={{
             bg: "#969696",
             color: "#fff",
@@ -60,7 +40,7 @@ export default function Search({ searchFunction }) {
             fontFamily: "GbMed",
             marginLeft: 1,
             marginRight: 1,
-            marginBottom: 2,
+            width: width * 0.8,
           }}
           onChangeText={(text) => searchFunction(text)}
           placeholder="Search Topic Name"
