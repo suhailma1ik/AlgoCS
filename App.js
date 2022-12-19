@@ -4,8 +4,8 @@ import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AuthenticationStack from "./Screens/Authentication/AuthenticationStack";
-import HomeStackNavigator from "./Screens/HomeStackNavigator/HomeStackNavigator";
 import { LogBox } from "react-native";
+import BottomTabNavigator from "./Screens/BottomTabNavigator/BottomTabNavigator";
 
 const linking = {
   prefixes: [
@@ -39,14 +39,7 @@ export default function App() {
   return (
     <NativeBaseProvider>
       <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          <Stack.Screen name="HomeStack" component={HomeStackNavigator} />
-          <Stack.Screen name="AuthStack" component={AuthenticationStack} />
-        </Stack.Navigator>
+        <BottomTabNavigator />
       </NavigationContainer>
     </NativeBaseProvider>
   );
