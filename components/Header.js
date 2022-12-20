@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { HStack, IconButton, Icon, Text, Box, useToast } from "native-base";
-import { Dimensions } from "react-native";
+import { Dimensions, Linking } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
 import { Shadow } from "react-native-shadow-2";
@@ -9,7 +9,7 @@ import useStore from "./Store/Store";
 import { StatusBar } from "expo-status-bar";
 import { useNavigation } from "@react-navigation/native";
 const { width, height } = Dimensions.get("window");
-
+const url = "https://forms.gle/PYazYWAZcdfNdmoW9";
 export function Header({ Topic }) {
   const navigation = useNavigation();
   const toast = useToast();
@@ -23,7 +23,7 @@ export function Header({ Topic }) {
   const signOut = async () => {
     removeUser();
     removeUserRole();
-    navigation.navigate("HomeStack");
+    navigation.navigate("Home");
   };
   const [fontsLoaded] = useFonts({
     GbMed: require("../assets/Fonts/Gilroy-Medium.ttf"),
@@ -31,19 +31,19 @@ export function Header({ Topic }) {
   });
   return (
     <Box>
-      <StatusBar style="light" backgroundColor="#1c1f20" />
-      <HStack py="3" px="1" alignItems="center" w="100%" maxW={width * 0.95}>
-        <HStack alignItems="center">
+      <StatusBar style='light' backgroundColor='#1c1f20' />
+      <HStack py='3' px='1' alignItems='center' w='100%' maxW={width * 0.95}>
+        <HStack alignItems='center'>
           {Topic === "Home" ? null : (
             <IconButton
               onPress={() => navigation.goBack()}
-              icon={<Icon size="lg" as={MaterialIcons} name="arrow-back" />}
+              icon={<Icon size='lg' as={MaterialIcons} name='arrow-back' />}
             />
           )}
           <Text
-            fontSize="20"
-            fontWeight="bold"
-            color="#c2c8d4"
+            fontSize='20'
+            fontWeight='bold'
+            color='#c2c8d4'
             style={{
               fontFamily: "GbBold",
               fontWeight: "bold",
@@ -55,26 +55,62 @@ export function Header({ Topic }) {
         </HStack>
         {Topic === "Home" ? (
           <HStack
-            alignItems="center"
+            alignItems='center'
             flex={1}
-            justifyContent="flex-end"
+            justifyContent='flex-end'
             marginLeft={0}
           >
-            <Box bgColor="transparent">
+            <Box
+              style={{
+                marginRight: width * 0.03,
+              }}
+            >
+              <TouchableOpacity
+                onPress={async () => {
+                  await Linking.openURL(url);
+                }}
+              >
+                <Shadow
+                  Shadow
+                  startColor='#2c2c2c'
+                  distance={10}
+                  offset={[1, 1]}
+                >
+                  <Text
+                    fontWeight='bold'
+                    style={{
+                      color: "#f9d3b4",
+                      fontFamily: "GbBold",
+                      fontWeight: "bold",
+                      borderColor: "transparent",
+                      borderWidth: 1,
+                      borderRadius: 10,
+                      padding: 10,
+                      backgroundColor: "#1a1a1a",
+                    }}
+                    fontSize='xs'
+                  >
+                    Feedback
+                  </Text>
+                </Shadow>
+              </TouchableOpacity>
+            </Box>
+
+            <Box bgColor='transparent'>
               {userRole === null ? (
                 <TouchableOpacity
                   onPress={() => {
-                    navigation.navigate("AuthStack");
+                    navigation.navigate("Login");
                   }}
                 >
                   <Shadow
                     Shadow
-                    startColor="#2c2c2c"
+                    startColor='#2c2c2c'
                     distance={10}
                     offset={[1, 1]}
                   >
                     <Text
-                      fontWeight="bold"
+                      fontWeight='bold'
                       style={{
                         color: "#f9d3b4",
                         fontFamily: "GbBold",
@@ -85,7 +121,7 @@ export function Header({ Topic }) {
                         padding: 10,
                         backgroundColor: "#1a1a1a",
                       }}
-                      fontSize="xs"
+                      fontSize='xs'
                     >
                       Log In
                     </Text>
@@ -102,12 +138,12 @@ export function Header({ Topic }) {
                 >
                   <Shadow
                     Shadow
-                    startColor="#2c2c2c"
+                    startColor='#2c2c2c'
                     distance={10}
                     offset={[1, 1]}
                   >
                     <Text
-                      fontWeight="bold"
+                      fontWeight='bold'
                       style={{
                         color: "#f9d3b4",
                         fontFamily: "GbBold",
@@ -118,7 +154,7 @@ export function Header({ Topic }) {
                         padding: 10,
                         backgroundColor: "#1a1a1a",
                       }}
-                      fontSize="xs"
+                      fontSize='xs'
                     >
                       Log Out
                     </Text>

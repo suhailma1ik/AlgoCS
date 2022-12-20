@@ -97,7 +97,9 @@ export default function HomeScreen({ navigation }) {
       _light={{ bg: "#dbd9d9" }}
       flex={1}
       width={width}
-      style={{ overflow: Platform.OS === "android" ? "hidden" : "scroll" }}
+      style={{
+        overflowY: Platform.OS === "android" ? "hidden" : "scroll",
+      }}
       alignItems="center"
     >
       <SafeAreaView

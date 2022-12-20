@@ -104,7 +104,7 @@ export default function SignUpScreen({ navigation }) {
             <VStack space={3} mt="5">
               <FormControl>
                 <Input
-                  width={Platform.OS === "android" ? width * 0.8 : width * 0.2}
+                  width={Platform.OS === "android" ? width * 0.8 : {}}
                   style={{
                     backgroundColor: "#2d333f",
                     color: "#9ca6b9",
@@ -123,7 +123,7 @@ export default function SignUpScreen({ navigation }) {
               </FormControl>
               <FormControl>
                 <Input
-                  width={Platform.OS === "android" ? width * 0.8 : width * 0.2}
+                  width={Platform.OS === "android" ? width * 0.8 : {}}
                   style={{
                     backgroundColor: "#2d333f",
                     color: "#9ca6b9",
@@ -143,7 +143,7 @@ export default function SignUpScreen({ navigation }) {
               </FormControl>
               <FormControl>
                 <Input
-                  width={Platform.OS === "android" ? width * 0.8 : width * 0.2}
+                  width={Platform.OS === "android" ? width * 0.8 : {}}
                   style={{
                     backgroundColor: "#2d333f",
                     color: "#9ca6b9",
