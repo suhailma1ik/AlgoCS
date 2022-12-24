@@ -1,4 +1,5 @@
 import React from "react";
+import { useEffect } from "react";
 import { NativeBaseProvider, extendTheme } from "native-base";
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
@@ -36,6 +37,11 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   LogBox.ignoreLogs(["Setting a timer"]);
+  useEffect(() => {
+    window.addEventListener("resize", () => {
+      window.location.reload();
+    });
+  }, []);
   return (
     <NativeBaseProvider>
       <NavigationContainer>
