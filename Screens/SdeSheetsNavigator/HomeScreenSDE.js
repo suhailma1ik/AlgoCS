@@ -4,28 +4,22 @@ import { Box, Text, useColorMode } from "native-base";
 import { useFonts } from "expo-font";
 import * as Progress from "react-native-progress";
 import { Shadow } from "react-native-shadow-2";
-const SheetsName = [
-  "Love Babbar",
-  "Striver",
-  "Fraz",
-  "Blind 75",
-  "GFG",
-  "Apna College",
-];
+// const SheetsName = [
+
 const SheetsName1 = {
   "Love Babbar": {
     link: "https://media-exp1.licdn.com/dms/image/C4D22AQGSvU4K3lV-TA/feedshare-shrink_2048_1536/0/1663846492872?e=2147483647&v=beta&t=x9pRok5MXtbB3ovECypZh81MMqO5pwc_guuqfPYiGOg",
-    problems: 450,
+    problems: 446,
     solved: 100,
   },
   Striver: {
     link: "https://yt3.ggpht.com/mO-SCDJLJ7R2lEgVQ8kPB9a5stxPm9xyMQUcEW7Ik7nbKeKfYSOQFI8iSMqKRD8gdGH8WtHKBA=s900-c-k-c0x00ffffff-no-rj",
-    problems: 184,
+    problems: 178,
     solved: 150,
   },
   Fraz: {
     link: "https://yt3.googleusercontent.com/FitboDHvZPrXqXtbe1JjfeN9x_wgNxv58GDadFqIf5nu1peeADWpWdW82Sb7eBaFH-TNy9AqgbM=s900-c-k-c0x00ffffff-no-rj",
-    problems: 350,
+    problems: 319,
     solved: 200,
   },
   "Blind 75": {
@@ -38,7 +32,7 @@ const SheetsName1 = {
     problems: 300,
     solved: 200,
   },
-  "Apna College": {
+  AmanDhattarwal: {
     link: "https://media.licdn.com/dms/image/C4E03AQFAoY-MSYJsCA/profile-displayphoto-shrink_800_800/0/1600154260690?e=2147483647&v=beta&t=l_BTSPSMWjK-RDRRX0-YsghTD3ij8PFmqxAy6ImL5XM",
     problems: 375,
     solved: 200,
@@ -92,7 +86,7 @@ export default function HomeScreenSDE({ navigation }) {
             >
               <Shadow
                 Shadow
-                startColor="#292c2f"
+                startColor='#292c2f'
                 distance={12}
                 offset={[1, 31]}
               >
@@ -182,9 +176,9 @@ export default function HomeScreenSDE({ navigation }) {
                   <Progress.Bar
                     progress={item.solved / item.problems}
                     width={width * 0.2}
-                    color="grey"
+                    color='grey'
                     animated={true}
-                    borderColor="#303030"
+                    borderColor='#303030'
                   />
                 </Box>
               </Shadow>

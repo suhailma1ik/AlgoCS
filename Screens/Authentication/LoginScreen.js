@@ -44,7 +44,9 @@ export default function LoginScreen({ navigation }) {
     const userRole = await getDoc(userRef);
     setUserRoleZus(userRole.data().role);
   };
+
   // safeArea p="2" py="8" w="90%" maxW="290"
+
   const Signin = () => {
     const auth = getAuth();
     signInWithEmailAndPassword(auth, email, password)
@@ -69,29 +71,29 @@ export default function LoginScreen({ navigation }) {
       flex={1}
       width={width}
       style={{ overflow: Platform.OS === "android" ? "hidden" : "scroll" }}
-      alignItems="center"
+      alignItems='center'
     >
       <SafeAreaView>
-        <Header Topic="Sign in" />
+        <Header Topic='Sign in' />
         <Center _dark={{ bg: "#1c1f20" }} _light={{ bg: "#1c1f20" }} flex={1}>
           <Box
             width={Platform.OS === "android" ? width * 0.99 : width * 0.918}
-            alignItems="center"
+            alignItems='center'
           >
             <Heading
-              size="lg"
-              fontWeight="600"
+              size='lg'
+              fontWeight='600'
               fontSize={30}
-              color="#c2c8d4"
+              color='#c2c8d4'
               style={{ fontFamily: "GbBold", textAlign: "center" }}
             >
               Welcome!
             </Heading>
             <Heading
-              mt="1"
-              color="#565f62"
-              fontWeight="medium"
-              size="xs"
+              mt='1'
+              color='#565f62'
+              fontWeight='medium'
+              size='xs'
               style={{
                 fontFamily: "GbMed",
                 textAlign: "center",
@@ -101,7 +103,7 @@ export default function LoginScreen({ navigation }) {
               Sign in to Continue.
             </Heading>
 
-            <VStack space={3} mt="5">
+            <VStack space={3} mt='5'>
               <FormControl>
                 <Input
                   width={Platform.OS === "android" ? width * 0.8 : {}}
@@ -114,11 +116,11 @@ export default function LoginScreen({ navigation }) {
                     borderWidth: 1,
                     marginBottom: 5,
                   }}
-                  placeholder="Enter your Email"
-                  placeholderTextColor="#4f596f"
+                  placeholder='Enter your Email'
+                  placeholderTextColor='#4f596f'
                   value={email}
                   onChangeText={(text) => setEmail(text)}
-                  variant="unstyled"
+                  variant='unstyled'
                 />
               </FormControl>
               <FormControl>
@@ -132,17 +134,17 @@ export default function LoginScreen({ navigation }) {
                     borderColor: "transparent",
                     borderWidth: 1,
                   }}
-                  placeholder="Enter your Password"
-                  placeholderTextColor="#4f596f"
+                  placeholder='Enter your Password'
+                  placeholderTextColor='#4f596f'
                   value={password}
                   onChangeText={(text) => setPassword(text)}
-                  type="password"
-                  variant="unstyled"
+                  type='password'
+                  variant='unstyled'
                 />
               </FormControl>
-              <HStack mt="3" justifyContent="center">
+              <HStack mt='3' justifyContent='center'>
                 <Box style={{ marginTop: 20, justifyContent: "center" }}>
-                  <Shadow startColor="#2c2c2c" distance={15} offset={[-5, -5]}>
+                  <Shadow startColor='#2c2c2c' distance={15} offset={[-5, -5]}>
                     <TouchableOpacity
                       onPress={Signin}
                       style={{ marginLeft: 0 }}
@@ -162,10 +164,10 @@ export default function LoginScreen({ navigation }) {
                   </Shadow>
                 </Box>
               </HStack>
-              <HStack mt="3" justifyContent="center">
+              <HStack mt='3' justifyContent='center'>
                 <Text
-                  fontSize="sm"
-                  color="#565f62"
+                  fontSize='sm'
+                  color='#565f62'
                   style={{ fontFamily: "GbMed" }}
                 >
                   Don't have an Account? &nbsp;

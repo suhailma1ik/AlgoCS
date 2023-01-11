@@ -45,7 +45,7 @@ export default function UserAlgos({ navigation }) {
   const addnewAlgorithmName = async () => {
     const userId = user.uid;
     const id = uuid();
-    const topicRef = doc(db, "PersonalAlgos", userId, "personalAlgos", id);
+    const topicRef = doc(db, "UserData", userId, "personalAlgos", id);
     setDoc(topicRef, {
       AlgoName: newAlgorithmName,
       Algo: newAlgorithm,
@@ -93,17 +93,17 @@ export default function UserAlgos({ navigation }) {
       <Box
         _dark={{ bg: "#1c1f20" }}
         flex={1}
-        justifyContent="center"
-        alignItems="center"
+        justifyContent='center'
+        alignItems='center'
       >
-        <ActivityIndicator size="large" color="#008000" />
+        <ActivityIndicator size='large' color='#008000' />
       </Box>
     );
   }
 
   return (
     <Box
-      alignItems="center"
+      alignItems='center'
       _dark={{ bg: "#1c1f20" }}
       _light={{ bg: "#dbd9d9" }}
       flex={1}
@@ -156,14 +156,14 @@ export default function UserAlgos({ navigation }) {
                   marginBottom: 2,
                   width: width * 0.8,
                 }}
-                selectedValueColor="red"
+                selectedValueColor='red'
                 selectedValue={language}
-                accessibilityLabel="Select Language"
-                placeholder="Select Language"
+                accessibilityLabel='Select Language'
+                placeholder='Select Language'
                 _selectedItem={{
                   bg: "red.900",
                   borderRadius: 10,
-                  endIcon: <CheckIcon size="5" />,
+                  endIcon: <CheckIcon size='5' />,
                 }}
                 mt={1}
                 onValueChange={(itemValue) => setLanguage(itemValue)}
@@ -185,8 +185,8 @@ export default function UserAlgos({ navigation }) {
                 }}
                 value={newAlgorithmName}
                 onChangeText={(text) => setNewAlgorithmName(text)}
-                placeholder="Add Name of Algorithm"
-                placeholderTextColor="#4d4d4d"
+                placeholder='Add Name of Algorithm'
+                placeholderTextColor='#4d4d4d'
               />
               <Input
                 _dark={{
@@ -203,11 +203,11 @@ export default function UserAlgos({ navigation }) {
                 multiline={true}
                 numberOfLines={4}
                 onChangeText={(text) => setNewAlgorithm(text)}
-                placeholder="Add Algorithm"
-                placeholderTextColor="#4d4d4d"
+                placeholder='Add Algorithm'
+                placeholderTextColor='#4d4d4d'
               />
             </Box>
-            <Shadow startColor="#2c2c2c" distance={15} offset={[-5, -5]}>
+            <Shadow startColor='#2c2c2c' distance={15} offset={[-5, -5]}>
               <TouchableOpacity
                 onPress={() => {
                   if (
@@ -230,7 +230,7 @@ export default function UserAlgos({ navigation }) {
           </Box>
         ) : (
           <Modal
-            animationType="slide"
+            animationType='slide'
             transparent={true}
             visible={modalVisible}
             onRequestClose={() => {
@@ -281,14 +281,14 @@ export default function UserAlgos({ navigation }) {
                     marginBottom: 2,
                     width: width * 0.8,
                   }}
-                  selectedValueColor="red"
+                  selectedValueColor='red'
                   selectedValue={language}
-                  accessibilityLabel="Select Language"
-                  placeholder="Select Language"
+                  accessibilityLabel='Select Language'
+                  placeholder='Select Language'
                   _selectedItem={{
                     bg: "red.900",
                     borderRadius: 10,
-                    endIcon: <CheckIcon size="5" />,
+                    endIcon: <CheckIcon size='5' />,
                   }}
                   mt={1}
                   onValueChange={(itemValue) => setLanguage(itemValue)}
@@ -310,8 +310,8 @@ export default function UserAlgos({ navigation }) {
                   }}
                   value={newAlgorithmName}
                   onChangeText={(text) => setNewAlgorithmName(text)}
-                  placeholder="Add Name of Algorithm"
-                  placeholderTextColor="#4d4d4d"
+                  placeholder='Add Name of Algorithm'
+                  placeholderTextColor='#4d4d4d'
                 />
                 <Input
                   _dark={{
@@ -328,11 +328,11 @@ export default function UserAlgos({ navigation }) {
                   multiline={true}
                   numberOfLines={4}
                   onChangeText={(text) => setNewAlgorithm(text)}
-                  placeholder="Add Algorithm"
-                  placeholderTextColor="#4d4d4d"
+                  placeholder='Add Algorithm'
+                  placeholderTextColor='#4d4d4d'
                 />
               </Box>
-              <Shadow startColor="#2c2c2c" distance={15} offset={[-5, -5]}>
+              <Shadow startColor='#2c2c2c' distance={15} offset={[-5, -5]}>
                 <TouchableOpacity
                   onPress={() => {
                     if (
@@ -372,7 +372,7 @@ export default function UserAlgos({ navigation }) {
               alignItems: "center",
             }}
           >
-            <Shadow startColor="#2c2c2c" distance={15} offset={[-5, -5]}>
+            <Shadow startColor='#2c2c2c' distance={15} offset={[-5, -5]}>
               <TouchableOpacity
                 onPress={() => {
                   setModalVisible(true);
@@ -401,11 +401,11 @@ export default function UserAlgos({ navigation }) {
             >
               <Shadow
                 Shadow
-                startColor="#292c2f"
+                startColor='#292c2f'
                 distance={12}
                 offset={[12, 12]}
               >
-                <Text style={styles.box} fontSize="4xl">
+                <Text style={styles.box} fontSize='4xl'>
                   {item.AlgoName}
                 </Text>
               </Shadow>

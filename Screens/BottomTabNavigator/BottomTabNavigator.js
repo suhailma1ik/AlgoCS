@@ -16,6 +16,7 @@ export default function BottomTabNavigator() {
           borderTopColor: "#040C17",
         },
       }}
+      initialRouteName='Home'
     >
       <Tab.Screen name='SDE Sheets' component={SdeSheetsNavigator} />
       <Tab.Screen name='Home' component={HomeStackNavigator} />

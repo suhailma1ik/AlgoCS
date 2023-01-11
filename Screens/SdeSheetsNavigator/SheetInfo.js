@@ -3,45 +3,79 @@ import {
   Dimensions,
   FlatList,
   StyleSheet,
-  TouchableOpacity,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Box, Text, useColorMode } from "native-base";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDoc, getDocs } from "firebase/firestore";
 import { db } from "../../Firebase";
-import { Shadow } from "react-native-shadow-2";
-import { Checkbox } from "react-native-paper";
+import QuestionInfoCard from "./components/QuestionInfoCard";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const { width, height } = Dimensions.get("window");
 
 export default function SheetInfo({ navigation, route }) {
   const [topics, setTopics] = useState([]);
   const { colorMode, toggleColorMode } = useColorMode();
   const [isLoaded, setIsLoaded] = useState(true);
+  const [userProgress, setUserProgress] = useState([]);
   const [checked, setChecked] = useState(false);
   const Difficulty = "Easy";
-
+  // const { user } = useStore((state) => ({
+  //   user: state.user,
+  // }));
   useEffect(() => {
-    const colRef = collection(db, "SDESheets");
-    getDocs(colRef).then((querySnapshot) => {
-      let data = [];
-      querySnapshot.forEach((doc) => {
-        data = [
-          ...data,
-          {
-            topic: doc.data().topic,
-            link: doc.data().link,
-            problem: doc.data().problem,
-          },
-        ];
-      });
-      setTopics(data);
-      setIsLoaded(false);
-      // console.log(data);
-    });
+    const getSheetInfo = async () => {
+      let sheetName = route.params.sheetName;
+      if (sheetName === "Love Babbar") {
+        sheetName = "LoveBabbar";
+      }
+      const storedSheet = await AsyncStorage.getItem(sheetName);
+      if (storedSheet) {
+        setTopics(JSON.parse(storedSheet));
+        setIsLoaded(false);
+      } else {
+        const colRef = collection(db, sheetName);
+        getDocs(colRef).then(async (querySnapshot) => {
+          let data = [];
+          querySnapshot.forEach((doc) => {
+            data = [
+              ...data,
+              {
+                topic: doc.data().topic,
+                link: doc.data().link,
+                problem: doc.data().problem,
+              },
+            ];
+          });
+          setTopics(data);
+          setIsLoaded(false);
+          await AsyncStorage.setItem(sheetName, JSON.stringify(data));
+        });
+      }
+    };
+    getSheetInfo();
     if (colorMode === "light") {
       toggleColorMode();
     }
   }, []);
+
+  // useEffect(() => {
+  //   const getUserProgress = () => {
+  //     const userId = user.uid;
+  //     let sheetName = route.params.sheetName;
+  //     if (sheetName === "Love Babbar") {
+  //       sheetName = "LoveBabbar";
+  //     }
+  //     const sheet = doc(db, "UserData", userId, sheetName);
+  //     getDoc(sheet).then((doc) => {
+  //       if (doc.exists()) {
+  //         setUserProgress(doc.data());
+  //       } else {
+  //         // console.log("No such document!");
+  //       }
+  //     });
+  //   };
+  //   getUserProgress();
+  // }, []);
 
   if (isLoaded) {
     return (
@@ -49,10 +83,10 @@ export default function SheetInfo({ navigation, route }) {
         _dark={{ bg: "#1c1f20" }}
         _light={{ bg: "#dbd9d9" }}
         flex={1}
-        justifyContent="center"
-        alignItems="center"
+        justifyContent='center'
+        alignItems='center'
       >
-        <ActivityIndicator size="large" color="#008000" />
+        <ActivityIndicator size='large' color='#008000' />
       </Box>
     );
   }
@@ -86,53 +120,15 @@ export default function SheetInfo({ navigation, route }) {
       </Box>
       <FlatList
         data={topics}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
         style={{ marginTop: height * 0.01, marginLeft: width * 0.04 }}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            onPress={() => {}}
-            style={{ marginTop: height * 0.01 }}
-          >
-            <Shadow Shadow startColor="#292c2f" distance={12} offset={[12, 12]}>
-              <Box style={styles.box1}>
-                <Box
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    flexDirection: "row",
-                    width: width * 0.85,
-                  }}
-                >
-                  <Text style={styles.box} fontSize={width * 0.013}>
-                    {item.topic}
-                  </Text>
-                  <Box
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      flexDirection: "row",
-                      width: width * 0.2,
-                    }}
-                  >
-                    <Text style={styles.box6} fontSize={width * 0.01}>
-                      {Difficulty}
-                    </Text>
-                    <Checkbox
-                      style={styles.checkbox}
-                      status={checked ? "checked" : "unchecked"}
-                      onPress={() => {
-                        setChecked(!checked);
-                      }}
-                      disabled={false}
-                      uncheckedColor="#484848"
-                      color="#007b28"
-                    />
-                  </Box>
-                </Box>
-              </Box>
-            </Shadow>
-          </TouchableOpacity>
+        renderItem={({ item, index }) => (
+          <QuestionInfoCard
+            index={index}
+            userProgress={userProgress}
+            item={item}
+          />
         )}
       />
     </Box>
