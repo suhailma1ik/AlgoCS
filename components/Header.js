@@ -10,6 +10,7 @@ import { StatusBar } from "expo-status-bar";
 import { useNavigation } from "@react-navigation/native";
 const { width, height } = Dimensions.get("window");
 const url = "https://forms.gle/PYazYWAZcdfNdmoW9";
+
 export function Header({ Topic }) {
   const navigation = useNavigation();
   const toast = useToast();
@@ -34,7 +35,7 @@ export function Header({ Topic }) {
       <StatusBar style='light' backgroundColor='#1c1f20' />
       <HStack py='3' px='1' alignItems='center' w='100%' maxW={width * 0.95}>
         <HStack alignItems='center'>
-          {Topic === "Home" ? null : (
+          {Topic === "Home" || Topic === "SDE Sheets" ? null : (
             <IconButton
               onPress={() => navigation.goBack()}
               icon={<Icon size='lg' as={MaterialIcons} name='arrow-back' />}
@@ -53,7 +54,7 @@ export function Header({ Topic }) {
             {Topic}
           </Text>
         </HStack>
-        {Topic === "Home" ? (
+        {Topic === "Home" || Topic === "SDE Sheets" ? (
           <HStack
             alignItems='center'
             flex={1}

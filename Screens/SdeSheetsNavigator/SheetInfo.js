@@ -6,25 +6,52 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Box, Text, useColorMode } from "native-base";
-import { collection, getDoc, getDocs } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "../../Firebase";
 import QuestionInfoCard from "./components/QuestionInfoCard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import useStore from "../../components/Store/Store";
+
 const { width, height } = Dimensions.get("window");
 
 export default function SheetInfo({ navigation, route }) {
+  let sheetName = route.params.sheetName;
+
   const [topics, setTopics] = useState([]);
   const { colorMode, toggleColorMode } = useColorMode();
   const [isLoaded, setIsLoaded] = useState(true);
   const [userProgress, setUserProgress] = useState([]);
   const [checked, setChecked] = useState(false);
   const Difficulty = "Easy";
-  // const { user } = useStore((state) => ({
-  //   user: state.user,
-  // }));
+  const { user } = useStore((state) => ({
+    user: state.user,
+  }));
+
+  useEffect(() => {
+    const getUserProgress = () => {
+      setIsLoaded(true);
+      const userId = user.uid;
+      if (sheetName === "Love Babbar") {
+        sheetName = "LoveBabbar";
+      }
+      const sheet = doc(db, "UserData", userId);
+      getDoc(sheet).then((doc) => {
+        setUserProgress(doc.data()[sheetName]);
+        setIsLoaded(false);
+      });
+    };
+    getUserProgress();
+  }, []);
+
   useEffect(() => {
     const getSheetInfo = async () => {
-      let sheetName = route.params.sheetName;
       if (sheetName === "Love Babbar") {
         sheetName = "LoveBabbar";
       }
@@ -58,24 +85,17 @@ export default function SheetInfo({ navigation, route }) {
     }
   }, []);
 
-  // useEffect(() => {
-  //   const getUserProgress = () => {
-  //     const userId = user.uid;
-  //     let sheetName = route.params.sheetName;
-  //     if (sheetName === "Love Babbar") {
-  //       sheetName = "LoveBabbar";
-  //     }
-  //     const sheet = doc(db, "UserData", userId, sheetName);
-  //     getDoc(sheet).then((doc) => {
-  //       if (doc.exists()) {
-  //         setUserProgress(doc.data());
-  //       } else {
-  //         // console.log("No such document!");
-  //       }
-  //     });
-  //   };
-  //   getUserProgress();
-  // }, []);
+  const updateInFB = async (index, isChecked) => {
+    userProgress.splice(index, 1, isChecked);
+    const ref = doc(db, "UserData", user.uid);
+    if (sheetName === "Love Babbar") {
+      sheetName = "LoveBabbar";
+    }
+    updateDoc(ref, {
+      [sheetName]: userProgress,
+    });
+    setChecked(!checked);
+  };
 
   if (isLoaded) {
     return (
@@ -119,15 +139,17 @@ export default function SheetInfo({ navigation, route }) {
         </Text>
       </Box>
       <FlatList
-        data={topics}
+        data={userProgress}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         style={{ marginTop: height * 0.01, marginLeft: width * 0.04 }}
         renderItem={({ item, index }) => (
           <QuestionInfoCard
             index={index}
-            userProgress={userProgress}
-            item={item}
+            sheetName={sheetName}
+            isDone={item}
+            item={topics[index]}
+            updateInFB={updateInFB}
           />
         )}
       />

@@ -45,6 +45,8 @@ export default function SignUpScreen({ navigation }) {
 
   const setUserAndRole = async (uid, user) => {
     const userRef = doc(db, "UserData", uid);
+    setUser(user);
+    setUserRoleZus("user");
     await setDoc(userRef, {
       role: "user",
       uid: uid,
@@ -55,8 +57,6 @@ export default function SignUpScreen({ navigation }) {
       Faraz: arrayMaker(319),
       AmanDhattarwal: arrayMaker(375),
     });
-    setUser(user);
-    setUserRoleZus("user");
   };
   const SignUp = () => {
     let valid = validateSignUp(name, email, password, confirmPassword);
@@ -66,8 +66,8 @@ export default function SignUpScreen({ navigation }) {
       createUserWithEmailAndPassword(auth, email, password)
         .then(async (userCredential) => {
           const user = userCredential.user;
+          navigation.replace("Home");
           await setUserAndRole(user.uid, user);
-          navigation.navigate("UserAlgos");
         })
         .catch((error) => {
           console.log(error);

@@ -1,10 +1,11 @@
 import { Dimensions, StyleSheet, TouchableOpacity, Image } from "react-native";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Text, useColorMode } from "native-base";
 import { useFonts } from "expo-font";
 import * as Progress from "react-native-progress";
 import { Shadow } from "react-native-shadow-2";
-// const SheetsName = [
+import { Header } from "../../components/Header";
+import useStore from "../../components/Store/Store";
 
 const SheetsName1 = {
   "Love Babbar": {
@@ -48,6 +49,10 @@ export default function HomeScreenSDE({ navigation }) {
     GbMed: require("../../assets/Fonts/Gilroy-Medium.ttf"),
     GbBold: require("../../assets/Fonts/Gilroy-Bold.ttf"),
   });
+  const { user } = useStore((state) => ({
+    user: state.user,
+  }));
+  const [nextScreen, setNextScreen] = useState(false);
   useEffect(() => {
     if (colorMode === "light") {
       toggleColorMode();
@@ -56,19 +61,8 @@ export default function HomeScreenSDE({ navigation }) {
 
   return (
     <Box _dark={{ bg: "#1c1f20" }} width={width} height={height} style={{}}>
-      <Text
-        style={{
-          fontSize: width * 0.025,
-          fontWeight: "bold",
-          textAlign: "center",
-          marginTop: height * 0.04,
-          marginBottom: height * 0.04,
-          fontFamily: "GbBold",
-          color: "#e8e8e8",
-        }}
-      >
-        🎖 SDE Sheets
-      </Text>
+      <Header Topic={"SDE Sheets"} />
+
       <Box
         style={{
           display: "flex",
@@ -81,7 +75,9 @@ export default function HomeScreenSDE({ navigation }) {
           return (
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate("Sheet", { sheetName: name });
+                user === null
+                  ? navigation.navigate("Login")
+                  : navigation.navigate("Sheet", { sheetName: name });
               }}
             >
               <Shadow

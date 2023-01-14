@@ -24,6 +24,7 @@ import { Shadow } from "react-native-shadow-2";
 import { useFonts } from "expo-font";
 import useStore from "../../components/Store/Store";
 import { SafeAreaView } from "react-native-safe-area-context";
+import LoadingActivity from "./Components/LoadingActivity";
 
 const { width, height } = Dimensions.get("window");
 export default function LoginScreen({ navigation }) {
@@ -33,13 +34,14 @@ export default function LoginScreen({ navigation }) {
   });
 
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState("");
   const toast = useToast();
   const setUserRoleZus = useStore((state) => state.setUserRole);
   const setUser = useStore((state) => state.setUser);
 
   const setUserRole = async (id, user) => {
-    const userRef = doc(db, "CustomFields", id);
+    const userRef = doc(db, "UserData", id);
     setUser(user);
     const userRole = await getDoc(userRef);
     setUserRoleZus(userRole.data().role);
@@ -48,12 +50,14 @@ export default function LoginScreen({ navigation }) {
   // safeArea p="2" py="8" w="90%" maxW="290"
 
   const Signin = () => {
+    setLoading(true);
     const auth = getAuth();
     signInWithEmailAndPassword(auth, email, password)
       .then(async (userCredential) => {
         const user = userCredential.user;
         await setUserRole(user.uid, user);
-        navigation.navigate("HomeStack");
+        setLoading(false);
+        navigation.replace("HomeStack");
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -73,6 +77,8 @@ export default function LoginScreen({ navigation }) {
       style={{ overflow: Platform.OS === "android" ? "hidden" : "scroll" }}
       alignItems='center'
     >
+      {loading && <LoadingActivity />}
+
       <SafeAreaView>
         <Header Topic='Sign in' />
         <Center _dark={{ bg: "#1c1f20" }} _light={{ bg: "#1c1f20" }} flex={1}>
