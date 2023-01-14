@@ -23,7 +23,7 @@ const SheetsName1 = {
     problems: 319,
     solved: 200,
   },
-  "Blind 75": {
+  Blind75: {
     link: "https://upload.wikimedia.org/wikipedia/commons/e/e4/B_symbol_white-red.png",
     problems: 75,
     solved: 50,
@@ -52,7 +52,7 @@ export default function HomeScreenSDE({ navigation }) {
   const { user } = useStore((state) => ({
     user: state.user,
   }));
-  const [nextScreen, setNextScreen] = useState(false);
+  // const [nextScreen, setNextScreen] = useState(false);
   useEffect(() => {
     if (colorMode === "light") {
       toggleColorMode();
