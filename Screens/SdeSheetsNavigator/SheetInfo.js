@@ -103,10 +103,10 @@ export default function SheetInfo({ navigation, route }) {
         _dark={{ bg: "#1c1f20" }}
         _light={{ bg: "#dbd9d9" }}
         flex={1}
-        justifyContent='center'
-        alignItems='center'
+        justifyContent="center"
+        alignItems="center"
       >
-        <ActivityIndicator size='large' color='#008000' />
+        <ActivityIndicator size="large" color="#008000" />
       </Box>
     );
   }
@@ -128,13 +128,16 @@ export default function SheetInfo({ navigation, route }) {
           marginBottom: height * 0.02,
         }}
       >
-        <Text style={styles.box3} fontSize={width * 0.025}>
+        <Text style={styles.box3} fontSize={width * 0.02}>
           ⚙️ Problem Title
         </Text>
-        <Text style={styles.box4} fontSize={width * 0.025}>
-          😖 Difficulty
+        <Text style={styles.box4} fontSize={width * 0.02}>
+          🔗 Link
         </Text>
-        <Text style={styles.box5} fontSize={width * 0.025}>
+        <Text style={styles.box3} fontSize={width * 0.02}>
+          📚 Topic
+        </Text>
+        <Text style={styles.box5} fontSize={width * 0.02}>
           ✅ Status
         </Text>
       </Box>

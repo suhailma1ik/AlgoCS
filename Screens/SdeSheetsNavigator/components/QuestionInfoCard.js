@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, Text } from "react-native";
+import { Dimensions, StyleSheet, Text, Linking } from "react-native";
 import React, { useState, useEffect, memo } from "react";
 import { Shadow } from "react-native-shadow-2";
 import { Box } from "native-base";
@@ -8,6 +8,7 @@ import useStore from "../../../components/Store/Store";
 import { doc } from "firebase/firestore";
 const { width, height } = Dimensions.get("window");
 const Difficulty = "Easy";
+import LaunchIcon from "@mui/icons-material/Launch";
 
 const QuestionInfoCard = ({ item, index, isDone, sheetName, updateInFB }) => {
   const [checked, setChecked] = useState(false);
@@ -21,48 +22,55 @@ const QuestionInfoCard = ({ item, index, isDone, sheetName, updateInFB }) => {
   }, []);
 
   return (
-    <Shadow Shadow startColor='#292c2f' distance={12} offset={[12, 12]}>
-      <Box style={styles.box1}>
-        <Box
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            flexDirection: "row",
-            width: width * 0.85,
-          }}
-        >
-          <Text style={styles.box} fontSize={width * 0.013}>
-            {item.problem}
-          </Text>
+    <Box style={{ marginBottom: height * 0.015 }}>
+      <Shadow Shadow startColor="#292c2f" distance={12} offset={[12, 12]}>
+        <Box style={styles.box1}>
           <Box
             style={{
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
               flexDirection: "row",
-              width: width * 0.2,
+              width: width * 0.85,
             }}
           >
-            <Text style={styles.box6} fontSize={width * 0.01}>
-              {Difficulty}
+            <Text style={styles.box} fontSize={width * 0.5}>
+              {item.problem}
             </Text>
-            <Checkbox
-              style={styles.checkbox}
-              status={checked ? "checked" : "unchecked"}
-              onPress={() => {
-                setChecked(!checked);
-                updateInFB(index, !checked);
+            <Box
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                flexDirection: "row",
+                width: width * 0.28,
               }}
-              disabled={false}
-              uncheckedColor='#484848'
-              color='#007b28'
-            />
+            >
+              <Text
+                onPress={async () => {
+                  await Linking.openURL(item.link);
+                }}
+                style={styles.box7}
+              >
+                <LaunchIcon sx={{ color: "#aaa9a8" }} />
+              </Text>
+              <Text style={styles.box6}>{item.topic}</Text>
+              <Checkbox
+                style={styles.checkbox}
+                status={checked ? "checked" : "unchecked"}
+                onPress={() => {
+                  setChecked(!checked);
+                  updateInFB(index, !checked);
+                }}
+                disabled={false}
+                uncheckedColor="#484848"
+                color="#007b28"
+              />
+            </Box>
           </Box>
         </Box>
-      </Box>
-    </Shadow>
-    // </TouchableOpacity>
+      </Shadow>
+    </Box>
   );
 };
 
@@ -73,8 +81,9 @@ const styles = StyleSheet.create({
     color: "#fad8bd",
     fontFamily: "GbMed",
     paddingTop: 7.5,
-    fontSize: 30,
+    fontSize: width * 0.0155,
     paddingLeft: width * 0.04,
+    marginBottom: height * 0.01,
   },
   box1: {
     display: "flex",
@@ -82,8 +91,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     width: width * 0.9,
-    height: height * 0.1,
-    margin: height * 0.02,
+    height: height * 0.08,
+    margin: height * 0.015,
     borderRadius: 10,
     textAlign: "center",
   },
@@ -103,9 +112,15 @@ const styles = StyleSheet.create({
   },
   box6: {
     fontFamily: "GbBold",
-    backgroundColor: "#007b28",
+    backgroundColor: "#26458c",
+    // color: "#f9d3b4",
+    color: "#d1d1d1",
     borderRadius: 15,
     padding: 10,
+    fontSize: width * 0.0125,
+  },
+  box7: {
+    fontFamily: "GbBold",
   },
   checkbox: {
     marginRight: width * 0.4,
