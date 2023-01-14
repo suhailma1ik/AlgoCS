@@ -9,7 +9,11 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
     "@expo/webpack-config": "~0.16.21",
+    "@mui/icons-material": "^5.11.0",
+    "@mui/material": "^5.11.4",
     "@react-native-async-storage/async-storage": "~1.17.3",
     "@react-native-community/checkbox": "^0.5.14",
     "@react-navigation/bottom-tabs": "^6.4.0",

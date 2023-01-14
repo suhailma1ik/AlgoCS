@@ -45,7 +45,7 @@ export default function UserAlgos({ navigation }) {
   const addnewAlgorithmName = async () => {
     const userId = user.uid;
     const id = uuid();
-    const topicRef = doc(db, "PersonalAlgos", userId, "personalAlgos", id);
+    const topicRef = doc(db, "UserData", userId, "personalAlgos", id);
     setDoc(topicRef, {
       AlgoName: newAlgorithmName,
       Algo: newAlgorithm,
@@ -153,13 +153,14 @@ export default function UserAlgos({ navigation }) {
                   fontFamily: "GbBold",
                   placeholderTextColor: "#515151",
                   margin: 1,
-                  marginBottom: 2,
+                  marginBottom: 10,
                   width: width * 0.8,
+                  color: "#262626",
                 }}
-                selectedValueColor="red"
                 selectedValue={language}
                 accessibilityLabel="Select Language"
                 placeholder="Select Language"
+                placeholderTextColor="#262626"
                 _selectedItem={{
                   bg: "red.900",
                   borderRadius: 10,
@@ -174,29 +175,30 @@ export default function UserAlgos({ navigation }) {
               </Select>
               <Input
                 _dark={{
-                  bg: "#969696",
+                  bg: "#707070",
                   color: "#fff",
                   borderRadius: 10,
-                  fontFamily: "GbMed",
+                  fontFamily: "GbBold",
                   marginLeft: 3,
                   marginRight: 3,
-                  marginBottom: 3.5,
+                  marginBottom: 7,
                   width: width * 0.8,
                 }}
                 value={newAlgorithmName}
                 onChangeText={(text) => setNewAlgorithmName(text)}
                 placeholder="Add Name of Algorithm"
-                placeholderTextColor="#4d4d4d"
+                placeholderTextColor="#262626"
               />
               <Input
                 _dark={{
-                  bg: "#969696",
+                  // bg: "#969696",
+                  bg: "#707070",
                   color: "#fff",
                   borderRadius: 10,
-                  fontFamily: "GbMed",
+                  fontFamily: "GbBold",
                   marginLeft: 3,
                   marginRight: 3,
-                  marginBottom: 3.5,
+                  marginBottom: 8,
                   width: width * 0.8,
                 }}
                 value={newAlgorithm}
@@ -204,7 +206,7 @@ export default function UserAlgos({ navigation }) {
                 numberOfLines={4}
                 onChangeText={(text) => setNewAlgorithm(text)}
                 placeholder="Add Algorithm"
-                placeholderTextColor="#4d4d4d"
+                placeholderTextColor="#262626"
               />
             </Box>
             <Shadow startColor="#2c2c2c" distance={15} offset={[-5, -5]}>
@@ -405,7 +407,19 @@ export default function UserAlgos({ navigation }) {
                 distance={12}
                 offset={[12, 12]}
               >
-                <Text style={styles.box} fontSize="4xl">
+                <Text
+                  _light={{
+                    bg: "#8E50AF",
+                  }}
+                  style={styles.box}
+                  _dark={{
+                    color: "#fff",
+                    borderRadius: 10,
+                    bg: "#26458c",
+                  }}
+                  __light={{ color: "#AF8E50" }}
+                  fontSize={width * 0.05 > 40 ? 40 : width * 0.05}
+                >
                   {item.AlgoName}
                 </Text>
               </Shadow>
@@ -425,14 +439,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: width * 0.9,
     height: height * 0.1,
+    margin: height * 0.02,
     borderRadius: 10,
     textAlign: "center",
     color: "#f9d3b4",
     fontFamily: "GbBold",
     paddingTop: 7.5,
-    color: "#fff",
-    borderRadius: 10,
-    backgroundColor: "#26458c",
   },
   text: {
     color: "#f9d3b4",
