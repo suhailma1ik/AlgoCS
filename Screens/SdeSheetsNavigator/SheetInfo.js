@@ -34,21 +34,19 @@ export default function SheetInfo({ navigation, route }) {
     user: state.user,
   }));
 
-  useEffect(() => {
-    const getUserProgress = () => {
-      setIsLoaded(true);
-      const userId = user.uid;
-      if (sheetName === "Love Babbar") {
-        sheetName = "LoveBabbar";
-      }
-      const sheet = doc(db, "UserData", userId);
-      getDoc(sheet).then((doc) => {
-        setUserProgress(doc.data()[sheetName]);
-        setIsLoaded(false);
-      });
-    };
-    getUserProgress();
-  }, []);
+  const getUserProgress = () => {
+    setIsLoaded(true);
+    const userId = user.uid;
+    if (sheetName === "Love Babbar") {
+      sheetName = "LoveBabbar";
+    }
+    const sheet = doc(db, "UserData", userId);
+    console.log(sheetName);
+    getDoc(sheet).then((doc) => {
+      setUserProgress(doc.data()[sheetName]);
+      setIsLoaded(false);
+    });
+  };
 
   useEffect(() => {
     const getSheetInfo = async () => {
@@ -57,11 +55,12 @@ export default function SheetInfo({ navigation, route }) {
       }
       const storedSheet = await AsyncStorage.getItem(sheetName);
       if (storedSheet) {
+        // console.log(storedSheet);
         setTopics(JSON.parse(storedSheet));
         setIsLoaded(false);
       } else {
         const colRef = collection(db, sheetName);
-        getDocs(colRef).then(async (querySnapshot) => {
+        await getDocs(colRef).then(async (querySnapshot) => {
           let data = [];
           querySnapshot.forEach((doc) => {
             data = [
@@ -73,6 +72,7 @@ export default function SheetInfo({ navigation, route }) {
               },
             ];
           });
+          data.sort((a, b) => (a.topic > b.topic ? 1 : -1));
           setTopics(data);
           setIsLoaded(false);
           await AsyncStorage.setItem(sheetName, JSON.stringify(data));
@@ -80,6 +80,7 @@ export default function SheetInfo({ navigation, route }) {
       }
     };
     getSheetInfo();
+    getUserProgress();
     if (colorMode === "light") {
       toggleColorMode();
     }
@@ -103,10 +104,10 @@ export default function SheetInfo({ navigation, route }) {
         _dark={{ bg: "#1c1f20" }}
         _light={{ bg: "#dbd9d9" }}
         flex={1}
-        justifyContent="center"
-        alignItems="center"
+        justifyContent='center'
+        alignItems='center'
       >
-        <ActivityIndicator size="large" color="#008000" />
+        <ActivityIndicator size='large' color='#008000' />
       </Box>
     );
   }
@@ -142,16 +143,17 @@ export default function SheetInfo({ navigation, route }) {
         </Text>
       </Box>
       <FlatList
-        data={userProgress}
+        data={topics}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         style={{ marginTop: height * 0.01, marginLeft: width * 0.04 }}
         renderItem={({ item, index }) => (
           <QuestionInfoCard
+            id={item.problem}
             index={index}
             sheetName={sheetName}
-            isDone={item}
-            item={topics[index]}
+            isDone={userProgress[index]}
+            item={item}
             updateInFB={updateInFB}
           />
         )}

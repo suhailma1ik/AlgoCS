@@ -55,8 +55,10 @@ export default function SignUpScreen({ navigation }) {
       email: email,
       LoveBabbar: arrayMaker(446),
       Striver: arrayMaker(178),
-      Faraz: arrayMaker(319),
+      Fraz: arrayMaker(319),
       AmanDhattarwal: arrayMaker(375),
+      GFG: arrayMaker(185),
+      Blind75: arrayMaker(169),
     });
   };
   const SignUp = () => {
@@ -82,10 +84,10 @@ export default function SignUpScreen({ navigation }) {
         _dark={{ bg: "#1c1f20" }}
         _light={{ bg: "#dbd9d9" }}
         flex={1}
-        justifyContent="center"
-        alignItems="center"
+        justifyContent='center'
+        alignItems='center'
       >
-        <ActivityIndicator size="large" color="#008000" />
+        <ActivityIndicator size='large' color='#008000' />
       </Box>
     );
   }
@@ -95,24 +97,24 @@ export default function SignUpScreen({ navigation }) {
       _light={{ bg: "#dbd9d9" }}
       flex={1}
       width={width}
-      style={{ overflow: Platform.OS === "android" ? "hidden" : "scroll" }}
-      alignItems="center"
+      style={{ overflow: Platform.OS === "android" ? "hidden" : "hidden" }}
+      alignItems='center'
     >
       <SafeAreaView>
         {/* {loading && <LoadingActivity />} */}
 
-        <Header Topic="Sign Up" />
+        <Header Topic='Sign Up' />
         <Center _dark={{ bg: "#1c1f20" }} _light={{ bg: "#1c1f20" }} flex={1}>
           <Box
             width={Platform.OS === "android" ? width * 0.99 : width * 0.918}
-            alignItems="center"
+            alignItems='center'
           >
             <Heading
               width={width * 0.25}
               height={height * 0.05}
-              fontWeight="600"
+              fontWeight='600'
               fontSize={30}
-              color="#c2c8d4"
+              color='#c2c8d4'
               style={{
                 fontFamily: "GbBold",
                 textAlign: "center",
@@ -123,9 +125,9 @@ export default function SignUpScreen({ navigation }) {
               Welcome!
             </Heading>
             <Heading
-              mt="1"
-              color="#565f62"
-              fontWeight="medium"
+              mt='1'
+              color='#565f62'
+              fontWeight='medium'
               width={width * 0.2}
               height={height * 0.05}
               style={{
@@ -137,7 +139,7 @@ export default function SignUpScreen({ navigation }) {
             >
               Sign up to Continue.
             </Heading>
-            <VStack space={3} mt="5">
+            <VStack space={3} mt='5'>
               <FormControl>
                 <Input
                   width={width * 0.25}
@@ -152,9 +154,9 @@ export default function SignUpScreen({ navigation }) {
                     padding: 10,
                     fontSize: width * 0.01,
                   }}
-                  placeholder="Enter your Name"
-                  placeholderTextColor="#4f596f"
-                  variant="unstyled"
+                  placeholder='Enter your Name'
+                  placeholderTextColor='#4f596f'
+                  variant='unstyled'
                   value={name}
                   onChangeText={(text) => setName(text)}
                 />
@@ -173,9 +175,9 @@ export default function SignUpScreen({ navigation }) {
                     padding: 10,
                     fontSize: width * 0.01,
                   }}
-                  placeholder="Enter your Email"
-                  placeholderTextColor="#4f596f"
-                  variant="unstyled"
+                  placeholder='Enter your Email'
+                  placeholderTextColor='#4f596f'
+                  variant='unstyled'
                   value={email}
                   onChangeText={(text) => setEmail(text)}
                 />
@@ -194,12 +196,12 @@ export default function SignUpScreen({ navigation }) {
                     padding: 10,
                     fontSize: width * 0.01,
                   }}
-                  placeholder="Enter your Password"
-                  placeholderTextColor="#4f596f"
-                  variant="unstyled"
+                  placeholder='Enter your Password'
+                  placeholderTextColor='#4f596f'
+                  variant='unstyled'
                   value={password}
                   onChangeText={(text) => setPassword(text)}
-                  type="password"
+                  type='password'
                 />
               </FormControl>
               <FormControl>
@@ -216,20 +218,20 @@ export default function SignUpScreen({ navigation }) {
                     padding: 10,
                     fontSize: width * 0.01,
                   }}
-                  placeholder="Confirm your Password"
-                  placeholderTextColor="#4f596f"
-                  variant="unstyled"
+                  placeholder='Confirm your Password'
+                  placeholderTextColor='#4f596f'
+                  variant='unstyled'
                   value={confirmPassword}
                   onChangeText={(text) => setConfirmPassword(text)}
-                  type="password"
+                  type='password'
                 />
               </FormControl>
               {/* <Button mt="2" colorScheme="indigo" onPress={SignUp}>
               Sign up
             </Button> */}
-              <HStack mt="3" justifyContent="center">
+              <HStack mt='3' justifyContent='center'>
                 <Box style={{ marginTop: 20, justifyContent: "center" }}>
-                  <Shadow startColor="#2c2c2c" distance={15} offset={[-5, -5]}>
+                  <Shadow startColor='#2c2c2c' distance={15} offset={[-5, -5]}>
                     <TouchableOpacity
                       onPress={SignUp}
                       style={{ marginLeft: 0 }}
@@ -250,10 +252,10 @@ export default function SignUpScreen({ navigation }) {
                   </Shadow>
                 </Box>
               </HStack>
-              <HStack mt="3" justifyContent="center">
+              <HStack mt='3' justifyContent='center'>
                 <Text
-                  fontSize="sm"
-                  color="#565f62"
+                  fontSize='sm'
+                  color='#565f62'
                   style={{ fontFamily: "GbMed", fontSize: width * 0.011 }}
                 >
                   Have an Account? &nbsp;

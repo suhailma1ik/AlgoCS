@@ -76,10 +76,10 @@ export default function LoginScreen({ navigation }) {
         _dark={{ bg: "#1c1f20" }}
         _light={{ bg: "#dbd9d9" }}
         flex={1}
-        justifyContent="center"
-        alignItems="center"
+        justifyContent='center'
+        alignItems='center'
       >
-        <ActivityIndicator size="large" color="#008000" />
+        <ActivityIndicator size='large' color='#008000' />
       </Box>
     );
   }
@@ -90,23 +90,23 @@ export default function LoginScreen({ navigation }) {
       _light={{ bg: "#dbd9d9" }}
       flex={1}
       width={width}
-      style={{ overflow: Platform.OS === "android" ? "hidden" : "scroll" }}
-      alignItems="center"
+      style={{ overflow: Platform.OS === "android" ? "hidden" : "hidden" }}
+      alignItems='center'
     >
       <SafeAreaView>
         {/* {loading && <LoadingActivity />} */}
-        <Header Topic="Sign in" />
+        <Header Topic='Sign in' />
         <Center _dark={{ bg: "#1c1f20" }} _light={{ bg: "#1c1f20" }} flex={1}>
           <Box
             width={Platform.OS === "android" ? width * 0.99 : width * 0.918}
-            alignItems="center"
+            alignItems='center'
           >
             <Heading
               width={width * 0.25}
               height={height * 0.05}
-              fontWeight="600"
+              fontWeight='600'
               fontSize={30}
-              color="#c2c8d4"
+              color='#c2c8d4'
               style={{
                 fontFamily: "GbBold",
                 textAlign: "center",
@@ -118,9 +118,9 @@ export default function LoginScreen({ navigation }) {
               Welcome!
             </Heading>
             <Heading
-              mt="1"
-              color="#565f62"
-              fontWeight="medium"
+              mt='1'
+              color='#565f62'
+              fontWeight='medium'
               width={width * 0.2}
               height={height * 0.05}
               style={{
@@ -133,7 +133,7 @@ export default function LoginScreen({ navigation }) {
               Sign in to Continue.
             </Heading>
 
-            <VStack space={3} mt="5">
+            <VStack space={3} mt='5'>
               <FormControl>
                 <Input
                   // width={Platform.OS === "android" ? width * 0.8 : {}}
@@ -149,11 +149,11 @@ export default function LoginScreen({ navigation }) {
                     padding: 10,
                     fontSize: width * 0.01,
                   }}
-                  placeholder="Enter your Email"
-                  placeholderTextColor="#4f596f"
+                  placeholder='Enter your Email'
+                  placeholderTextColor='#4f596f'
                   value={email}
                   onChangeText={(text) => setEmail(text)}
-                  variant="unstyled"
+                  variant='unstyled'
                 />
               </FormControl>
               <FormControl>
@@ -170,15 +170,15 @@ export default function LoginScreen({ navigation }) {
                     padding: 10,
                     fontSize: width * 0.01,
                   }}
-                  placeholder="Enter your Password"
-                  placeholderTextColor="#4f596f"
+                  placeholder='Enter your Password'
+                  placeholderTextColor='#4f596f'
                   value={password}
                   onChangeText={(text) => setPassword(text)}
-                  type="password"
-                  variant="unstyled"
+                  type='password'
+                  variant='unstyled'
                 />
               </FormControl>
-              <HStack mt="3" justifyContent="center">
+              <HStack mt='3' justifyContent='center'>
                 <Box
                   style={{
                     marginTop: 20,
@@ -186,7 +186,7 @@ export default function LoginScreen({ navigation }) {
                     marginBottom: width * 0.01,
                   }}
                 >
-                  <Shadow startColor="#2c2c2c" distance={15} offset={[-5, -5]}>
+                  <Shadow startColor='#2c2c2c' distance={15} offset={[-5, -5]}>
                     <TouchableOpacity
                       onPress={Signin}
                       style={{ marginLeft: 0 }}
@@ -207,10 +207,10 @@ export default function LoginScreen({ navigation }) {
                   </Shadow>
                 </Box>
               </HStack>
-              <HStack mt="3" justifyContent="center">
+              <HStack mt='3' justifyContent='center'>
                 <Text
-                  fontSize="sm"
-                  color="#565f62"
+                  fontSize='sm'
+                  color='#565f62'
                   style={{ fontFamily: "GbMed", fontSize: width * 0.012 }}
                 >
                   Don't have an Account? &nbsp;

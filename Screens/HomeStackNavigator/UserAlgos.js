@@ -59,7 +59,7 @@ export default function UserAlgos({ navigation }) {
 
   useEffect(async () => {
     const id = user.uid;
-    const colRef = collection(db, "PersonalAlgos", id, "personalAlgos");
+    const colRef = collection(db, "UserData", id, "personalAlgos");
     getDocs(colRef).then((querySnapshot) => {
       let data = [];
       querySnapshot.forEach((doc) => {
@@ -93,21 +93,21 @@ export default function UserAlgos({ navigation }) {
       <Box
         _dark={{ bg: "#1c1f20" }}
         flex={1}
-        justifyContent="center"
-        alignItems="center"
+        justifyContent='center'
+        alignItems='center'
       >
-        <ActivityIndicator size="large" color="#008000" />
+        <ActivityIndicator size='large' color='#008000' />
       </Box>
     );
   }
 
   return (
     <Box
-      alignItems="center"
+      alignItems='center'
       _dark={{ bg: "#1c1f20" }}
       _light={{ bg: "#dbd9d9" }}
       flex={1}
-      style={{ overflow: Platform.OS === "android" ? "hidden" : "scroll" }}
+      style={{ overflow: Platform.OS === "android" ? "hidden" : "hidden" }}
     >
       <SafeAreaView>
         <Header navigation={navigation} Topic={"My Algos"} />
@@ -158,13 +158,13 @@ export default function UserAlgos({ navigation }) {
                   color: "#262626",
                 }}
                 selectedValue={language}
-                accessibilityLabel="Select Language"
-                placeholder="Select Language"
-                placeholderTextColor="#262626"
+                accessibilityLabel='Select Language'
+                placeholder='Select Language'
+                placeholderTextColor='#262626'
                 _selectedItem={{
                   bg: "red.900",
                   borderRadius: 10,
-                  endIcon: <CheckIcon size="5" />,
+                  endIcon: <CheckIcon size='5' />,
                 }}
                 mt={1}
                 onValueChange={(itemValue) => setLanguage(itemValue)}
@@ -186,8 +186,8 @@ export default function UserAlgos({ navigation }) {
                 }}
                 value={newAlgorithmName}
                 onChangeText={(text) => setNewAlgorithmName(text)}
-                placeholder="Add Name of Algorithm"
-                placeholderTextColor="#262626"
+                placeholder='Add Name of Algorithm'
+                placeholderTextColor='#262626'
               />
               <Input
                 _dark={{
@@ -205,11 +205,11 @@ export default function UserAlgos({ navigation }) {
                 multiline={true}
                 numberOfLines={4}
                 onChangeText={(text) => setNewAlgorithm(text)}
-                placeholder="Add Algorithm"
-                placeholderTextColor="#262626"
+                placeholder='Add Algorithm'
+                placeholderTextColor='#262626'
               />
             </Box>
-            <Shadow startColor="#2c2c2c" distance={15} offset={[-5, -5]}>
+            <Shadow startColor='#2c2c2c' distance={15} offset={[-5, -5]}>
               <TouchableOpacity
                 onPress={() => {
                   if (
@@ -232,7 +232,7 @@ export default function UserAlgos({ navigation }) {
           </Box>
         ) : (
           <Modal
-            animationType="slide"
+            animationType='slide'
             transparent={true}
             visible={modalVisible}
             onRequestClose={() => {
@@ -283,14 +283,14 @@ export default function UserAlgos({ navigation }) {
                     marginBottom: 2,
                     width: width * 0.8,
                   }}
-                  selectedValueColor="red"
+                  selectedValueColor='red'
                   selectedValue={language}
-                  accessibilityLabel="Select Language"
-                  placeholder="Select Language"
+                  accessibilityLabel='Select Language'
+                  placeholder='Select Language'
                   _selectedItem={{
                     bg: "red.900",
                     borderRadius: 10,
-                    endIcon: <CheckIcon size="5" />,
+                    endIcon: <CheckIcon size='5' />,
                   }}
                   mt={1}
                   onValueChange={(itemValue) => setLanguage(itemValue)}
@@ -312,8 +312,8 @@ export default function UserAlgos({ navigation }) {
                   }}
                   value={newAlgorithmName}
                   onChangeText={(text) => setNewAlgorithmName(text)}
-                  placeholder="Add Name of Algorithm"
-                  placeholderTextColor="#4d4d4d"
+                  placeholder='Add Name of Algorithm'
+                  placeholderTextColor='#4d4d4d'
                 />
                 <Input
                   _dark={{
@@ -330,11 +330,11 @@ export default function UserAlgos({ navigation }) {
                   multiline={true}
                   numberOfLines={4}
                   onChangeText={(text) => setNewAlgorithm(text)}
-                  placeholder="Add Algorithm"
-                  placeholderTextColor="#4d4d4d"
+                  placeholder='Add Algorithm'
+                  placeholderTextColor='#4d4d4d'
                 />
               </Box>
-              <Shadow startColor="#2c2c2c" distance={15} offset={[-5, -5]}>
+              <Shadow startColor='#2c2c2c' distance={15} offset={[-5, -5]}>
                 <TouchableOpacity
                   onPress={() => {
                     if (
@@ -374,7 +374,7 @@ export default function UserAlgos({ navigation }) {
               alignItems: "center",
             }}
           >
-            <Shadow startColor="#2c2c2c" distance={15} offset={[-5, -5]}>
+            <Shadow startColor='#2c2c2c' distance={15} offset={[-5, -5]}>
               <TouchableOpacity
                 onPress={() => {
                   setModalVisible(true);
@@ -403,7 +403,7 @@ export default function UserAlgos({ navigation }) {
             >
               <Shadow
                 Shadow
-                startColor="#292c2f"
+                startColor='#292c2f'
                 distance={12}
                 offset={[12, 12]}
               >

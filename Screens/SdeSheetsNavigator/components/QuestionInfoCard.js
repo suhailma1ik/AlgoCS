@@ -23,7 +23,7 @@ const QuestionInfoCard = ({ item, index, isDone, sheetName, updateInFB }) => {
 
   return (
     <Box style={{ marginBottom: height * 0.015 }}>
-      <Shadow Shadow startColor="#292c2f" distance={12} offset={[12, 12]}>
+      <Shadow Shadow startColor='#292c2f' distance={12} offset={[12, 12]}>
         <Box style={styles.box1}>
           <Box
             style={{
@@ -63,8 +63,8 @@ const QuestionInfoCard = ({ item, index, isDone, sheetName, updateInFB }) => {
                   updateInFB(index, !checked);
                 }}
                 disabled={false}
-                uncheckedColor="#484848"
-                color="#007b28"
+                uncheckedColor='#484848'
+                color='#007b28'
               />
             </Box>
           </Box>
