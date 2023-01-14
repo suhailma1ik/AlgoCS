@@ -37,14 +37,14 @@ export default function Search({ searchFunction }) {
             bg: "#969696",
             color: "#fff",
             borderRadius: 10,
-            fontFamily: "GbMed",
+            fontFamily: "GbBold",
             marginLeft: 1,
             marginRight: 1,
             width: width * 0.8,
           }}
           onChangeText={(text) => searchFunction(text)}
           placeholder="Search Topic Name"
-          placeholderTextColor="#4d4d4d"
+          placeholderTextColor="#262626"
         ></Input>
       </Box>
     </Box>

@@ -23,7 +23,8 @@ import { useFonts } from "expo-font";
 import { Shadow } from "react-native-shadow-2";
 import Search from "../../components/Search";
 import useStore from "../../components/Store/Store";
-import { StatusBar } from "expo-status-bar";
+// import { StatusBar } from "expo-status-bar";
+
 const { width, height } = Dimensions.get("window");
 export default function HomeScreen({ navigation }) {
   const [fontsLoaded] = useFonts({
@@ -83,10 +84,10 @@ export default function HomeScreen({ navigation }) {
         _dark={{ bg: "#1c1f20" }}
         _light={{ bg: "#dbd9d9" }}
         flex={1}
-        justifyContent="center"
-        alignItems="center"
+        justifyContent='center'
+        alignItems='center'
       >
-        <ActivityIndicator size="large" color="#008000" />
+        <ActivityIndicator size='large' color='#008000' />
       </Box>
     );
   }
@@ -100,13 +101,13 @@ export default function HomeScreen({ navigation }) {
       style={{
         overflowY: Platform.OS === "android" ? "hidden" : "scroll",
       }}
-      alignItems="center"
+      alignItems='center'
     >
       <SafeAreaView
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       >
-        <Header Topic="Home" />
+        <Header Topic='Home' />
         {userRole === "admin" ? (
           <Box
             _dark={{
@@ -159,11 +160,11 @@ export default function HomeScreen({ navigation }) {
                 }}
                 value={newTopic}
                 onChangeText={(text) => setNewTopic(text)}
-                placeholder="Enter Name Of new Topic"
-                placeholderTextColor="#4d4d4d"
+                placeholder='Enter Name Of new Topic'
+                placeholderTextColor='#4d4d4d'
               ></Input>
             </Box>
-            <Shadow startColor="#2c2c2c" distance={15} offset={[-5, -5]}>
+            <Shadow startColor='#2c2c2c' distance={15} offset={[-5, -5]}>
               <TouchableOpacity
                 onPress={() => {
                   if (newTopic.length > 0) {
@@ -194,7 +195,7 @@ export default function HomeScreen({ navigation }) {
               : navigation.navigate("UserAlgos");
           }}
         >
-          <Shadow Shadow startColor="#2c2c2c" distance={12} offset={[12, 12]}>
+          <Shadow Shadow startColor='#2c2c2c' distance={12} offset={[12, 12]}>
             <Text
               style={styles.box1}
               _dark={{
@@ -203,7 +204,7 @@ export default function HomeScreen({ navigation }) {
                 bg: "#792222",
               }}
               __light={{ color: "#AF8E50" }}
-              fontSize="4xl"
+              fontSize='4xl'
             >
               Add My Algos
             </Text>
@@ -226,7 +227,7 @@ export default function HomeScreen({ navigation }) {
             >
               <Shadow
                 Shadow
-                startColor="#292c2f"
+                startColor='#292c2f'
                 distance={12}
                 offset={[12, 12]}
               >
