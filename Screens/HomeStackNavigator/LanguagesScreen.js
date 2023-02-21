@@ -77,17 +77,17 @@ export default function LanguagesScreen({ navigation, route }) {
         _dark={{ bg: "#1c1f20" }}
         _light={{ bg: "#dbd9d9" }}
         flex={1}
-        justifyContent="center"
-        alignItems="center"
+        justifyContent='center'
+        alignItems='center'
       >
-        <ActivityIndicator size="large" color="#008000" />
+        <ActivityIndicator size='large' color='#008000' />
       </Box>
     );
   }
 
   return (
     <Box
-      alignItems="center"
+      alignItems='center'
       _dark={{ bg: "#1c1f20" }}
       _light={{ bg: "#dbd9d9" }}
       flex={1}
@@ -153,8 +153,8 @@ export default function LanguagesScreen({ navigation, route }) {
                 }}
                 value={newLanguage}
                 onChangeText={(text) => setNewLanguage(text)}
-                placeholder="Add Name of Language"
-                placeholderTextColor="#4d4d4d"
+                placeholder='Add Name of Language'
+                placeholderTextColor='#4d4d4d'
               />{" "}
               <Input
                 _light={{
@@ -180,12 +180,12 @@ export default function LanguagesScreen({ navigation, route }) {
                 numberOfLines={4}
                 value={newAlgorithm}
                 onChangeText={(text) => setNewAlgorithm(text)}
-                placeholder="Add Algorithm"
-                placeholderTextColor="#4d4d4d"
+                placeholder='Add Algorithm'
+                placeholderTextColor='#4d4d4d'
               />
             </Box>
             {colorMode === "dark" ? (
-              <Shadow startColor="#2c2c2c" distance={15} offset={[-5, -5]}>
+              <Shadow startColor='#2c2c2c' distance={15} offset={[-5, -5]}>
                 <TouchableOpacity
                   onPress={() => {
                     if (newLanguage !== "" && newAlgorithm !== "") {
@@ -207,7 +207,7 @@ export default function LanguagesScreen({ navigation, route }) {
                 </TouchableOpacity>
               </Shadow>
             ) : (
-              <Shadow startColor="#3e886e" distance={15} offset={[-5, -5]}>
+              <Shadow startColor='#3e886e' distance={15} offset={[-5, -5]}>
                 <TouchableOpacity
                   onPress={() => {
                     if (newLanguage !== "" && newAlgorithm !== "") {
@@ -249,7 +249,7 @@ export default function LanguagesScreen({ navigation, route }) {
               {colorMode === "light" ? (
                 <Shadow
                   Shadow
-                  startColor="#bab8b8"
+                  startColor='#bab8b8'
                   distance={12}
                   offset={[12, 12]}
                 >
@@ -264,7 +264,7 @@ export default function LanguagesScreen({ navigation, route }) {
                       bg: "#26458c",
                     }}
                     __light={{ color: "#AF8E50" }}
-                    fontSize="4xl"
+                    fontSize='4xl'
                   >
                     {item.Language}
                   </Text>
@@ -272,7 +272,7 @@ export default function LanguagesScreen({ navigation, route }) {
               ) : (
                 <Shadow
                   Shadow
-                  startColor="#292c2f"
+                  startColor='#292c2f'
                   distance={12}
                   offset={[12, 12]}
                 >
@@ -287,7 +287,7 @@ export default function LanguagesScreen({ navigation, route }) {
                       bg: "#26458c",
                     }}
                     __light={{ color: "#AF8E50" }}
-                    fontSize="4xl"
+                    fontSize='4xl'
                   >
                     {item.Language}
                   </Text>

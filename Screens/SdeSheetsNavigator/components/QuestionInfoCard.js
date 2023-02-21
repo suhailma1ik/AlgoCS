@@ -3,9 +3,7 @@ import React, { useState, useEffect, memo } from "react";
 import { Shadow } from "react-native-shadow-2";
 import { Box } from "native-base";
 import { Checkbox } from "react-native-paper";
-import { db } from "../../../Firebase";
 import useStore from "../../../components/Store/Store";
-import { doc } from "firebase/firestore";
 const { width, height } = Dimensions.get("window");
 const Difficulty = "Easy";
 import LaunchIcon from "@mui/icons-material/Launch";
@@ -19,6 +17,7 @@ const QuestionInfoCard = ({ item, index, isDone, sheetName, updateInFB }) => {
     if (isDone === true) {
       setChecked(true);
     }
+    // console.log("isDone", isDone);
   }, []);
 
   return (

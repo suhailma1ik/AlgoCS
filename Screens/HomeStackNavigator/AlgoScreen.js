@@ -94,10 +94,10 @@ export default function AlgoScreen({ navigation, route }) {
         _dark={{ bg: "#1c1f20" }}
         _light={{ bg: "#dbd9d9" }}
         flex={1}
-        justifyContent="center"
-        alignItems="center"
+        justifyContent='center'
+        alignItems='center'
       >
-        <ActivityIndicator size="large" color="#008000" />
+        <ActivityIndicator size='large' color='#008000' />
       </Box>
     );
   }
@@ -110,11 +110,11 @@ export default function AlgoScreen({ navigation, route }) {
         overflow: Platform.OS === "android" ? "hidden" : "scroll",
       }}
       flex={1}
-      alignItems="center"
+      alignItems='center'
     >
       <SafeAreaView>
         <Header
-          fontFamily="GbBold"
+          fontFamily='GbBold'
           navigation={navigation}
           Topic={route.params.algoName}
         />
@@ -140,12 +140,12 @@ export default function AlgoScreen({ navigation, route }) {
                 placeholderTextColor: "#515151",
                 margin: 1,
               }}
-              placeholder="Choose Theme"
+              placeholder='Choose Theme'
               mt={height * 0.01}
               _selectedItem={{
                 bg: "red.900",
                 borderRadius: 10,
-                endIcon: <CheckIcon size="5" />,
+                endIcon: <CheckIcon size='5' />,
               }}
               onValueChange={async (itemValue) => {
                 setTheme(map1.get(itemValue));
@@ -160,11 +160,11 @@ export default function AlgoScreen({ navigation, route }) {
           </Box>
           {Platform.OS !== "web" ? (
             <Text
-              fontFamily="GbMed"
+              fontFamily='GbMed'
               marginLeft={1}
-              color="#c2c8d4"
+              color='#c2c8d4'
               marginBottom={4}
-              textAlign="center"
+              textAlign='center'
             >
               Long press on the code to copy it .
             </Text>

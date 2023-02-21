@@ -1,19 +1,22 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeStackNavigator from "../HomeStackNavigator/HomeStackNavigator";
 import SdeSheetsNavigator from "../SdeSheetsNavigator/SdeSheetsNavigator";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
-const Tab = createBottomTabNavigator();
+const Tab = createMaterialTopTabNavigator();
 
 export default function BottomTabNavigator() {
   return (
     <Tab.Navigator
       screenOptions={{
-        headerShown: false,
+        // headerShown: false,
         tabBarStyle: {
           backgroundColor: "#040C17",
           borderTopColor: "#040C17",
+        },
+        tabBarLabelStyle: {
+          color: "#fff",
         },
       }}
       // initialRouteName='Home'

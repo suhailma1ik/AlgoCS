@@ -5,7 +5,16 @@ import {
   StyleSheet,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { Box, Text, useColorMode } from "native-base";
+import { MaterialIcons } from "@expo/vector-icons";
+
+import {
+  Box,
+  Icon,
+  IconButton,
+  Text,
+  useColorMode,
+  useToast,
+} from "native-base";
 import {
   collection,
   doc,
@@ -29,11 +38,25 @@ export default function SheetInfo({ navigation, route }) {
   const [isLoaded, setIsLoaded] = useState(true);
   const [userProgress, setUserProgress] = useState([]);
   const [checked, setChecked] = useState(false);
-  const Difficulty = "Easy";
-  const { user } = useStore((state) => ({
-    user: state.user,
-  }));
+  // const Difficulty = "Easy";
+  const toast = useToast();
 
+  const { user, Babbar, Striver, Blind75, Fraz, AmanDhattarwal, GFG } =
+    useStore((state) => ({
+      user: state.user,
+      Babbar: state.Babbar,
+      Striver: state.Striver,
+      Blind75: state.Blind75,
+      Fraz: state.Fraz,
+      AmanDhattarwal: state.AmanDhattarwal,
+      GFG: state.GFG,
+    }));
+  const setBabbar = useStore((state) => state.setBabbar);
+  const setStriver = useStore((state) => state.setStriver);
+  const setBlind75 = useStore((state) => state.setBlind75);
+  const setFraz = useStore((state) => state.setFraz);
+  const setAmanDhattarwal = useStore((state) => state.setAmanDhattarwal);
+  const setGFG = useStore((state) => state.setGFG);
   const getUserProgress = () => {
     setIsLoaded(true);
     const userId = user.uid;
@@ -41,9 +64,19 @@ export default function SheetInfo({ navigation, route }) {
       sheetName = "LoveBabbar";
     }
     const sheet = doc(db, "UserData", userId);
-    console.log(sheetName);
+
     getDoc(sheet).then((doc) => {
       setUserProgress(doc.data()[sheetName]);
+      // console.log(doc.data()[sheetName]);
+      const count = doc.data()[sheetName].filter((val) => val === true).length;
+      // console.log(count);
+      if (sheetName === "LoveBabbar") setBabbar(count);
+      else if (sheetName === "Striver") setStriver(count);
+      else if (sheetName === "Blind75") setBlind75(count);
+      else if (sheetName === "Fraz") setFraz(count);
+      else if (sheetName === "AmanDhattarwal") setAmanDhattarwal(count);
+      else if (sheetName === "GFG") setGFG(count);
+
       setIsLoaded(false);
     });
   };
@@ -74,8 +107,12 @@ export default function SheetInfo({ navigation, route }) {
           });
           data.sort((a, b) => (a.topic > b.topic ? 1 : -1));
           setTopics(data);
-          setIsLoaded(false);
           await AsyncStorage.setItem(sheetName, JSON.stringify(data));
+          window.location.reload();
+          toast.show({
+            title: "Loading Sheet",
+          });
+          setIsLoaded(false);
         });
       }
     };
@@ -88,6 +125,25 @@ export default function SheetInfo({ navigation, route }) {
 
   const updateInFB = async (index, isChecked) => {
     userProgress.splice(index, 1, isChecked);
+
+    if (isChecked) {
+      if (sheetName === "LoveBabbar") setBabbar(Babbar + 1);
+      else if (sheetName === "Striver") setStriver(Striver + 1);
+      else if (sheetName === "Blind75") setBlind75(Blind75 + 1);
+      else if (sheetName === "Fraz") setFraz(Fraz + 1);
+      else if (sheetName === "AmanDhattarwal")
+        setAmanDhattarwal(AmanDhattarwal + 1);
+      else if (sheetName === "GFG") setGFG(GFG + 1);
+    } else {
+      if (sheetName === "LoveBabbar") setBabbar(Babbar - 1);
+      else if (sheetName === "Striver") setStriver(Striver - 1);
+      else if (sheetName === "Blind75") setBlind75(Blind75 - 1);
+      else if (sheetName === "Fraz") setFraz(Fraz - 1);
+      else if (sheetName === "AmanDhattarwal")
+        setAmanDhattarwal(AmanDhattarwal - 1);
+      else if (sheetName === "GFG") setGFG(GFG - 1);
+    }
+
     const ref = doc(db, "UserData", user.uid);
     if (sheetName === "Love Babbar") {
       sheetName = "LoveBabbar";
@@ -130,6 +186,10 @@ export default function SheetInfo({ navigation, route }) {
         }}
       >
         <Text style={styles.box3} fontSize={width * 0.02}>
+          <IconButton
+            onPress={() => navigation.goBack()}
+            icon={<Icon size='sm' as={MaterialIcons} name='arrow-back' />}
+          />
           ⚙️ Problem Title
         </Text>
         <Text style={styles.box4} fontSize={width * 0.02}>
@@ -143,17 +203,16 @@ export default function SheetInfo({ navigation, route }) {
         </Text>
       </Box>
       <FlatList
-        data={topics}
+        data={userProgress}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         style={{ marginTop: height * 0.01, marginLeft: width * 0.04 }}
         renderItem={({ item, index }) => (
           <QuestionInfoCard
-            id={item.problem}
             index={index}
             sheetName={sheetName}
-            isDone={userProgress[index]}
-            item={item}
+            isDone={item}
+            item={topics[index]}
             updateInFB={updateInFB}
           />
         )}
@@ -183,6 +242,8 @@ const styles = StyleSheet.create({
   box3: {
     fontFamily: "GbBold",
     color: "#f4b078",
+    alignItems: "center",
+    justifyContent: "center",
   },
   box4: {
     fontFamily: "GbBold",

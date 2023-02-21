@@ -68,6 +68,7 @@ export default function LoginScreen({ navigation }) {
         toast.show({
           description: "Invalid email or password",
         });
+        setLoading(false);
       });
   };
   if (loading) {

@@ -26,7 +26,8 @@ import { useFonts } from "expo-font";
 import useStore from "../../components/Store/Store";
 import { SafeAreaView } from "react-native-safe-area-context";
 import LoadingActivity from "./Components/LoadingActivity";
-import { arrayMaker, validateSignUp } from "../../utils/validator";
+import { arrayMaker, emailValidator } from "../../utils/validator";
+import strings from "../../utils/strings";
 
 const { width, height } = Dimensions.get("window");
 export default function SignUpScreen({ navigation }) {
@@ -34,7 +35,15 @@ export default function SignUpScreen({ navigation }) {
     GbMed: require("../../assets/Fonts/Gilroy-Medium.ttf"),
     GbBold: require("../../assets/Fonts/Gilroy-Bold.ttf"),
   });
+  // useEffect(() => {
+  //   const unlisten = window.addEventListener("popstate", () => {
+  //     navigation.goback();
+  //   });
 
+  //   return () => {
+  //     unlisten();
+  //   };
+  // }, []);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -43,6 +52,37 @@ export default function SignUpScreen({ navigation }) {
   const toast = useToast();
   const setUserRoleZus = useStore((state) => state.setUserRole);
   const setUser = useStore((state) => state.setUser);
+
+  const validateSignUp = (name, email, password, confirmPassword) => {
+    if (
+      name === "" ||
+      email === "" ||
+      password === "" ||
+      confirmPassword === ""
+    ) {
+      toast.show({
+        description: strings.FILL_ALL,
+      });
+      return false;
+    } else if (emailValidator(email)) {
+      toast.show({
+        description: strings.VALID_EMAIL,
+      });
+      return false;
+    } else if (password !== confirmPassword) {
+      toast.show({
+        description: strings.PWD_NOT_MATCH,
+      });
+      return false;
+    } else if (password.length < 6) {
+      toast.show({
+        description: strings.PWD_LENGTH,
+      });
+      return false;
+    } else {
+      return true;
+    }
+  };
 
   const setUserAndRole = async (uid, user) => {
     const userRef = doc(db, "UserData", uid);
@@ -61,23 +101,27 @@ export default function SignUpScreen({ navigation }) {
       Blind75: arrayMaker(169),
     });
   };
+
   const SignUp = () => {
+    setLoading(true);
     let valid = validateSignUp(name, email, password, confirmPassword);
+    console.log(valid);
     if (valid) {
-      setLoading(true);
       const auth = getAuth();
       createUserWithEmailAndPassword(auth, email, password)
         .then(async (userCredential) => {
           const user = userCredential.user;
-          navigation.navigate("HomeStack");
           navigation.navigate("Home");
           await setUserAndRole(user.uid, user);
+          setLoading(false);
         })
         .catch((error) => {
           console.log(error);
         });
     }
+    setLoading(false);
   };
+
   if (loading) {
     return (
       <Box
@@ -91,6 +135,7 @@ export default function SignUpScreen({ navigation }) {
       </Box>
     );
   }
+
   return (
     <Box
       _dark={{ bg: "#1c1f20" }}
@@ -101,7 +146,7 @@ export default function SignUpScreen({ navigation }) {
       alignItems='center'
     >
       <SafeAreaView>
-        {/* {loading && <LoadingActivity />} */}
+        {loading && <LoadingActivity />}
 
         <Header Topic='Sign Up' />
         <Center _dark={{ bg: "#1c1f20" }} _light={{ bg: "#1c1f20" }} flex={1}>

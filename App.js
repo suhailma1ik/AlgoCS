@@ -37,11 +37,7 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   LogBox.ignoreLogs(["Setting a timer"]);
-  useEffect(() => {
-    window.addEventListener("resize", () => {
-      window.location.reload();
-    });
-  }, []);
+
   return (
     <NativeBaseProvider>
       <NavigationContainer>
