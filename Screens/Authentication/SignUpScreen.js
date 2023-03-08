@@ -18,8 +18,8 @@ import {
   VStack,
 } from "native-base";
 import { Header } from "../../components/Header";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { db } from "../../Firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "../../Firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { Shadow } from "react-native-shadow-2";
 import { useFonts } from "expo-font";
@@ -107,7 +107,7 @@ export default function SignUpScreen({ navigation }) {
     let valid = validateSignUp(name, email, password, confirmPassword);
     console.log(valid);
     if (valid) {
-      const auth = getAuth();
+      // const auth = getAuth();
       createUserWithEmailAndPassword(auth, email, password)
         .then(async (userCredential) => {
           const user = userCredential.user;

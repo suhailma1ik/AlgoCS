@@ -18,14 +18,19 @@ import {
   VStack,
 } from "native-base";
 import { Header } from "../../components/Header";
-import { doc, getDoc } from "firebase/firestore";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { db } from "../../Firebase";
+import { collection, doc, getDoc, getDocs, query } from "firebase/firestore";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
+import { auth, db, provider } from "../../Firebase";
 import { Shadow } from "react-native-shadow-2";
 import { useFonts } from "expo-font";
 import useStore from "../../components/Store/Store";
 import { SafeAreaView } from "react-native-safe-area-context";
 import LoadingActivity from "./Components/LoadingActivity";
+import strings from "../../utils/strings";
 
 const { width, height } = Dimensions.get("window");
 export default function LoginScreen({ navigation }) {
@@ -47,18 +52,54 @@ export default function LoginScreen({ navigation }) {
     const userRole = await getDoc(userRef);
     setUserRoleZus(userRole.data().role);
   };
+  const validate = async (data) => {
+    let userMail = data.user.email;
+    let exist = false;
+    // setLoading(true);
+
+    const ref = collection(db, "UserData");
+    const q = query(ref, where("email", "==", userMail));
+    console.log(q);
+    // getDocs(ref).then((querySnapshot) => {
+    //   // querySnapshot.forEach((doc) => {
+    //   //   if (doc.data().email === userMail) {
+    //   //     exist = true;
+    //   //   }
+    //   // });
+    //   // if (exist) {
+    //   //   addGoogleUser(data);
+    //   // } else {
+    //   //   showShortMessage(strings.USER_NOT_EXISTS);
+    //   //   setLoading(false);
+    //   // }
+    //   console.log(querySnapshot);
+    // });
+  };
+
+  const addGoogleUser = async (data) => {
+    setLoading(true);
+    console.log(data);
+    await setUserRole(user.uid, user);
+    setLoading(false);
+    navigation.navigate("Home");
+  };
+
+  const googleSignIn = async () => {
+    signInWithPopup(auth, provider).then((result) => {
+      validate(result);
+    });
+  };
 
   // safeArea p="2" py="8" w="90%" maxW="290"
 
   const Signin = () => {
     setLoading(true);
-    const auth = getAuth();
+    // const auth = getAuth();
     signInWithEmailAndPassword(auth, email, password)
       .then(async (userCredential) => {
         const user = userCredential.user;
         await setUserRole(user.uid, user);
         setLoading(false);
-        navigation.navigate("HomeStack");
         navigation.navigate("Home");
       })
       .catch((error) => {
@@ -203,6 +244,35 @@ export default function LoginScreen({ navigation }) {
                         }}
                       >
                         Sign in
+                      </Text>
+                    </TouchableOpacity>
+                  </Shadow>
+                </Box>
+              </HStack>
+              <HStack mt='3' justifyContent='center'>
+                <Box
+                  style={{
+                    marginTop: 10,
+                    justifyContent: "center",
+                    marginBottom: width * 0.01,
+                  }}
+                >
+                  <Shadow startColor='#2c2c2c' distance={15} offset={[-5, -5]}>
+                    <TouchableOpacity
+                      onPress={() => googleSignIn()}
+                      style={{ marginLeft: 0 }}
+                    >
+                      <Text
+                        style={{
+                          color: "#f9d3b4",
+                          fontFamily: "GbBold",
+                          borderRadius: 10,
+                          padding: width * 0.008,
+                          backgroundColor: "#0E8388",
+                          fontSize: width * 0.013,
+                        }}
+                      >
+                        Google
                       </Text>
                     </TouchableOpacity>
                   </Shadow>

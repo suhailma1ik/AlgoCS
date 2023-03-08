@@ -9,4 +9,5 @@ export default {
   PWD_LENGTH: "Password should be atleast 6 characters long",
   INVALID_LOGIN: "Account not found. Please try again",
   REGISTER_GOOGLE: "Continue with Google",
+  USER_NOT_EXISTS: "Kindly Signup first",
 };
